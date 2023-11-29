@@ -4,4 +4,4 @@ if (exit) return;
 
 var webScraper = new WebScraper.WebScraper(delay);
 
-webScraper.Run();
+List<Region> regions = await webScraper.RunAsync();
