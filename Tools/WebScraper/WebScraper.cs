@@ -135,6 +135,7 @@ public class WebScraper
 
             regions.Add(currentRegion);
         }
+        driver.Close();
     }
     public async Task LoadOsmIdAsync(List<Region> regions)
     {
