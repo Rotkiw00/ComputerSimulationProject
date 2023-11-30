@@ -230,7 +230,7 @@ public class WebScraper
         var coordinates = jsonObj.RootElement.GetProperty("coordinates")[0][0];
         foreach(var coord in coordinates.EnumerateArray())
         {
-            region.Borders.Add((coord[0].GetDouble(), coord[1].GetDouble()));
+            region.Borders.Add([coord[0].GetDouble(), coord[1].GetDouble()]);
         }
         Console.WriteLine(" - Complete");
     }
