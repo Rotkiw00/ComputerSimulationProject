@@ -17,7 +17,7 @@ public class WebScraper
         var regions = new List<Region>();
         LoadPkwSejm(regions);
         await LoadOsmIdAsync(regions);
-        LoadOsmBorders(regions);
+        await LoadOsmBordersAsync(regions);
         return regions;
     }
 
@@ -152,7 +152,21 @@ public class WebScraper
             await GetRegionId(client, region);
         }
     }
-    public void LoadOsmBorders(List<Region> regions) { }
+    public async Task LoadOsmBordersAsync(List<Region> regions) 
+    {
+        Console.WriteLine("[SYSTEM] Load OSM borders data");
+
+        HttpClient client = new HttpClient();
+        client.DefaultRequestHeaders.Accept.Clear();
+        client.DefaultRequestHeaders.Accept
+            .Add(new MediaTypeWithQualityHeaderValue("application/vnd.github.v3+json"));
+        client.DefaultRequestHeaders.Add("User-Agent", ".NET application");
+
+        foreach (var region in regions)
+        {
+            await GetRegionBorders(client, region);
+        }
+    }
 
     public async Task GetRegionId(HttpClient client, Region region, Region? parentRegion = null)
     {
@@ -190,5 +204,34 @@ public class WebScraper
         region.OsmId = id;
 
         Console.WriteLine($"id: {id}");
+    }
+    public async Task GetRegionBorders(HttpClient client, Region region)
+    {
+        string baseUrl = "https://polygons.openstreetmap.fr/get_geojson.py?id={0}&params=0";
+
+        if (region.Inner != null)
+            foreach (var innerRegion in region.Inner)
+            {
+                await GetRegionBorders(client, innerRegion);
+            }
+
+        if (region.Type == RegionType.ElectoralDistrict) return;
+
+        Console.Write($"[INFO] Getting borders data for {region.Name} (id: {region.OsmId})");
+
+        string request = String.Format(baseUrl, region.OsmId);
+
+        Thread.Sleep((int)_delay);
+        var jsonString = await client.GetStringAsync(request);
+        var jsonObj = JsonDocument.Parse(jsonString);
+
+        region.Borders = new();
+
+        var coordinates = jsonObj.RootElement.GetProperty("coordinates")[0][0];
+        foreach(var coord in coordinates.EnumerateArray())
+        {
+            region.Borders.Add((coord[0].GetDouble(), coord[1].GetDouble()));
+        }
+        Console.WriteLine(" - Complete");
     }
 }
