@@ -28,8 +28,7 @@ public class WebScraper
         IWebDriver driver = new ChromeDriver();
         driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromMilliseconds(_delay);
 
-        //TODO 41
-        for (int i = 1; i <= 1; i++)
+        for (int i = 1; i <= 41; i++)
         {
             Console.WriteLine($"[INFO] Okręg {i}");
 
