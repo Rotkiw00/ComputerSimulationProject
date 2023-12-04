@@ -28,18 +28,18 @@ public class WebScraper
         IWebDriver driver = new ChromeDriver();
         driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromMilliseconds(_delay);
 
-        for (int i = 1; i <= 41; i++)
+        for (int i = 33; i <= 33; i++)
         {
             Console.WriteLine($"[INFO] Okręg {i}");
 
-            Region currentRegion = new($"Okręg {i}", RegionType.ElectoralDistrict);
+            Region currentRegion = new($"Okręg {i}", RegionType.ElectoralDistrict, i);
             currentRegion.Inner = new();
 
             if (i == 19)
             {
                 Console.WriteLine($"[INFO] Okręg {i}, Warszawa");
 
-                Region inner = new("Warszawa", RegionType.CityWithCountyRights);
+                Region inner = new("Warszawa", RegionType.CityWithCountyRights, i);
                 currentRegion.Inner.Add(inner);
                 continue;
             }
@@ -77,7 +77,7 @@ public class WebScraper
 
                 if (elementName.StartsWith("Powiat "))
                 {
-                    r0 = new Region(elementName, RegionType.County);
+                    r0 = new Region(elementName, RegionType.County, i);
                     r0.Inner = new();
 
                     var urlCounty = currentRegionElement.url;
@@ -113,12 +113,12 @@ public class WebScraper
                         if (countyElementName.StartsWith("gm. "))
                         {
                             countyElementName = countyElementName.Replace("gm. ", "");
-                            r1 = new Region(countyElementName, RegionType.Municipality);
+                            r1 = new Region(countyElementName, RegionType.Municipality, i);
                         }
                         else
                         {
                             countyElementName = countyElementName.Replace("m. ", "");
-                            r1 = new Region(countyElementName, RegionType.City);
+                            r1 = new Region(countyElementName, RegionType.City, i);
                         }
                         r0.Inner.Add(r1);
                     }
@@ -126,7 +126,7 @@ public class WebScraper
                 else
                 {
                     elementName = elementName.Replace("Miasto na prawach powiatu ", "");
-                    r0 = new Region(elementName, RegionType.CityWithCountyRights);
+                    r0 = new Region(elementName, RegionType.CityWithCountyRights, i);
                 }
 
                 currentRegion.Inner.Add(r0);
@@ -135,8 +135,13 @@ public class WebScraper
             regions.Add(currentRegion);
         }
         driver.Close();
+
+        foreach (var region in regions)
+        {
+            FixRecursively(region);
+        }
     }
-    public async Task LoadOsmIdAsync(List<Region> regions)
+    private async Task LoadOsmIdAsync(List<Region> regions)
     {
         Console.WriteLine("[SYSTEM] Load OSM relation ids");
 
@@ -151,7 +156,7 @@ public class WebScraper
             await GetRegionId(client, region);
         }
     }
-    public async Task LoadOsmBordersAsync(List<Region> regions) 
+    private async Task LoadOsmBordersAsync(List<Region> regions) 
     {
         Console.WriteLine("[SYSTEM] Load OSM borders data");
 
@@ -167,7 +172,7 @@ public class WebScraper
         }
     }
 
-    public async Task GetRegionId(HttpClient client, Region region, Region? parentRegion = null)
+    private async Task GetRegionId(HttpClient client, Region region, Region? parentRegion = null)
     {
         string baseUrl = "https://nominatim.openstreetmap.org/search.php?q={0}&format=jsonv2";
 
@@ -189,9 +194,12 @@ public class WebScraper
         if (parentRegion != null && parentRegion.Type == RegionType.County)
         {
             nameParam += $"%2C {parentRegion.Name}";
-            Console.Write($"{parentRegion.Name}, ");
+            Console.Write($"{parentRegion.Name.ToLower()}, ");
         }
-        
+
+        Console.Write($"województwo {region.Voivodeship}, ");
+        nameParam += $"%2C województwo {region.Voivodeship}";
+
         nameParam = nameParam.Replace(' ', '+');
         string request = String.Format(baseUrl, nameParam);
 
@@ -199,12 +207,27 @@ public class WebScraper
         var jsonString = await client.GetStringAsync(request);
         var jsonObj = JsonDocument.Parse(jsonString);
 
-        ulong id = jsonObj.RootElement[0].GetProperty("osm_id").GetUInt64();
+        ulong id;
+
+        try
+        {
+            id = jsonObj.RootElement[0].GetProperty("osm_id").GetUInt64();
+        }
+        catch
+        {
+            nameParam = nameParam.Replace("gmina+", "");
+            request = String.Format(baseUrl, nameParam);
+            Thread.Sleep((int)_delay);
+            jsonString = await client.GetStringAsync(request);
+            jsonObj = JsonDocument.Parse(jsonString);
+            id = jsonObj.RootElement[0].GetProperty("osm_id").GetUInt64();
+        }
+        
         region.OsmId = id;
 
         Console.WriteLine($"id: {id}");
     }
-    public async Task GetRegionBorders(HttpClient client, Region region)
+    private async Task GetRegionBorders(HttpClient client, Region region)
     {
         string baseUrl = "https://polygons.openstreetmap.fr/get_geojson.py?id={0}&params=0";
 
@@ -232,5 +255,17 @@ public class WebScraper
             region.Borders.Add([coord[0].GetDouble(), coord[1].GetDouble()]);
         }
         Console.WriteLine(" - Complete");
+    }
+
+    private void FixRecursively(Region region)
+    {
+        if(region.Inner != null)
+        {
+            foreach (var r in region.Inner)
+            {
+                FixRecursively(r);
+            }
+        }
+        region.Fix();
     }
 }
