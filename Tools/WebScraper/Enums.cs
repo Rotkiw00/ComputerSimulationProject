@@ -6,5 +6,12 @@ public enum RegionType
     CityWithCountyRights,
     County,
     Municipality,
-    City
+    City,
+    CityDistrict
+}
+
+public enum ElectionType
+{
+    Sejm,
+    Senat
 }
