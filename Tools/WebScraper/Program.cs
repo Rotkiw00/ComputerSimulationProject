@@ -1,6 +1,4 @@
-﻿using System.Text.Json;
-
-(bool exit, string path, uint delay) = ArgsManager.Check(args);
+﻿(bool exit, string path, uint delay) = ArgsManager.Check(args);
 
 if (exit) return;
 

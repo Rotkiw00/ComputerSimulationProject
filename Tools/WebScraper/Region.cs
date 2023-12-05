@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace WebScraper;
+﻿namespace WebScraper;
 
 public class Region
 {
