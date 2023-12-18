@@ -581,6 +581,7 @@ GameObject:
   - component: {fileID: 248219421}
   - component: {fileID: 248219420}
   - component: {fileID: 248219419}
+  - component: {fileID: 248219422}
   m_Layer: 5
   m_Name: PlayButton
   m_TagString: Untagged
@@ -652,13 +653,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
+      - m_Target: {fileID: 248219422}
+        m_TargetAssemblyTypeName: StartWindowMenu, Assembly-CSharp
+        m_MethodName: OpenSimulationCreatorScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -702,6 +703,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 248219417}
   m_CullTransparentMesh: 1
+--- !u!114 &248219422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 248219417}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 950bcb612d77b0745abc016efd66a7b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SimulationFilePath: 
 --- !u!1 &254357574
 GameObject:
   m_ObjectHideFlags: 0
@@ -1443,7 +1457,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 536589989}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.999986
+  m_Size: 0.99975204
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1925,7 +1939,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.00019360965}
+  m_AnchoredPosition: {x: 0, y: 0.0008719169}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &1294109056
@@ -2099,8 +2113,8 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_HighlightedColor: {r: 0.74509805, g: 0.7372549, b: 0.72156864, a: 1}
+    m_PressedColor: {r: 0.74509805, g: 0.7372549, b: 0.72156864, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1

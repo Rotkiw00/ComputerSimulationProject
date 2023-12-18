@@ -15,6 +15,11 @@ public class StartWindowMenu : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 2);
     }
 
+    public void OpenSimulationCreatorScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 3);
+    }
+
     public const int MainWindowIndex = 0;
     public void NavigateBack()
     {
