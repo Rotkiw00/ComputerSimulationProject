@@ -7,6 +7,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MapVisualization", "MapVisu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebScraper", "WebScraper\WebScraper.csproj", "{527EF529-259C-4D81-8778-6321A057547D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElectionSimulatorWPF", "ElectionSimulatorWPF\ElectionSimulatorWPF.csproj", "{FD01B131-8522-495C-B9AC-05E9AF990C36}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElectionSimulatorConsole", "ElectionSimulatorConsole\ElectionSimulatorConsole.csproj", "{B1D573CD-8FDF-4C16-9476-9B63FE0C8411}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElectionSimulatorLibrary", "ElectionSimulatorLibrary\ElectionSimulatorLibrary.csproj", "{C9817E45-0FC4-4C83-B7AE-43F695B389CC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +27,18 @@ Global
 		{527EF529-259C-4D81-8778-6321A057547D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{527EF529-259C-4D81-8778-6321A057547D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{527EF529-259C-4D81-8778-6321A057547D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD01B131-8522-495C-B9AC-05E9AF990C36}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD01B131-8522-495C-B9AC-05E9AF990C36}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD01B131-8522-495C-B9AC-05E9AF990C36}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD01B131-8522-495C-B9AC-05E9AF990C36}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1D573CD-8FDF-4C16-9476-9B63FE0C8411}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1D573CD-8FDF-4C16-9476-9B63FE0C8411}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1D573CD-8FDF-4C16-9476-9B63FE0C8411}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1D573CD-8FDF-4C16-9476-9B63FE0C8411}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9817E45-0FC4-4C83-B7AE-43F695B389CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9817E45-0FC4-4C83-B7AE-43F695B389CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9817E45-0FC4-4C83-B7AE-43F695B389CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9817E45-0FC4-4C83-B7AE-43F695B389CC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
