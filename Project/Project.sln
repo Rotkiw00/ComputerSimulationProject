@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34221.43
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MapVisualization", "MapVisualization\MapVisualization.csproj", "{3C434EC2-E8DA-4846-9BFA-A08137393DE8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebScraper", "WebScraper\WebScraper.csproj", "{527EF529-259C-4D81-8778-6321A057547D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3C434EC2-E8DA-4846-9BFA-A08137393DE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C434EC2-E8DA-4846-9BFA-A08137393DE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C434EC2-E8DA-4846-9BFA-A08137393DE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C434EC2-E8DA-4846-9BFA-A08137393DE8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{527EF529-259C-4D81-8778-6321A057547D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{527EF529-259C-4D81-8778-6321A057547D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{527EF529-259C-4D81-8778-6321A057547D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{527EF529-259C-4D81-8778-6321A057547D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {03982806-856A-4732-8236-452D46374D36}
+	EndGlobalSection
+EndGlobal
