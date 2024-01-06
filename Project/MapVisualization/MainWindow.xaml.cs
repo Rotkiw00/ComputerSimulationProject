@@ -27,16 +27,15 @@ namespace MapVisualization
 
         private void FileButton_Click(object sender, RoutedEventArgs e)
         {
-            var dialog = new Microsoft.Win32.OpenFileDialog();
-            dialog.DefaultExt = ".json";
-            dialog.Filter = "JSON files (.json)|*.json";
+            var dialog = new Microsoft.Win32.OpenFileDialog
+            {
+                DefaultExt = ".json",
+                Filter = "JSON files (.json)|*.json"
+            };
 
             bool? result = dialog.ShowDialog();
 
-            if (result != true)
-            {
-                return;
-            }
+            if (result != true) { return; }
 
             string fileName = dialog.FileName;
 
