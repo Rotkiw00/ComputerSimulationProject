@@ -70,6 +70,13 @@ namespace ElectionSimulatorWPF
             ///TODO: Uruchomienie widoku z mapą
             ///
         }
+
+        private void btnEnterSummaryWindow_Click(object sender, RoutedEventArgs e)
+        {
+            var objectSecondWindow = new SummaryWindow();
+            this.Visibility = Visibility.Collapsed;
+            objectSecondWindow.Show();
+        }
     }
 
     /*W celach testowych tworzę klasę symulującą symulacje*/
