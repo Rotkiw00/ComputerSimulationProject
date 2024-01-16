@@ -1,0 +1,32 @@
+@using Microsoft.AspNetCore.Components.Web
+
+@using PSC.Blazor.Components.Chartjs
+@using PSC.Blazor.Components.Chartjs.Enums
+@using PSC.Blazor.Components.Chartjs.Models
+@using PSC.Blazor.Components.Chartjs.Models.Common
+@using PSC.Blazor.Components.Chartjs.Models.Bar
+@using PSC.Blazor.Components.Chartjs.Models.Doughnut
+@using PSC.Blazor.Components.Chartjs.Models.Line
+
+<h3 class="center">Wyniki wyborów - poparcie</h3>
+
+<br />
+
+<Chart Config="_barChartConfig1" @ref="_barChart1" Height="450px"></Chart>
+
+<br />
+<hr />
+<br />
+
+<div class="center">
+	<div class="child">
+		<h3 class="center">Rozk³ad mandatów SEJM</h3>
+		<Chart Config="_doughnutChartConfig2" @ref="_doughnutChart2" Height="300px"></Chart>
+	</div>
+	<div class="child">
+		<h3 class="center">Rozk³ad mandatów SENAT</h3>
+		<Chart Config="_doughnutChartConfig3" @ref="_doughnutChart3" Height="300px"></Chart>
+	</div>
+</div>
+
+<br />
