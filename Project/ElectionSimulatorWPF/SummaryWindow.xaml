@@ -4,12 +4,19 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ElectionSimulatorWPF"
+        xmlns:blazor="clr-namespace:Microsoft.AspNetCore.Components.WebView.Wpf;assembly=Microsoft.AspNetCore.Components.WebView.Wpf"
         mc:Ignorable="d"
         Title="Podsumowanie" Height="1000" Width="1500" ResizeMode="CanMinimize"
         WindowStartupLocation="CenterScreen">
     <Grid>
         <!--tylko testowanie powrotu-->
-        <Button Name="btnBackToMainWindow" Content="Powrót" HorizontalAlignment="Center" FontSize="30" Margin="0,414,0,0" VerticalAlignment="Top" Height="147" Width="308" Click="btnBackToMainWindow_Click"/>
+        <Button Name="btnBackToMainWindow" Content="Powrót" HorizontalAlignment="Left" FontSize="30" Margin="10,10,0,0" VerticalAlignment="Top" Height="55" Width="200" Click="btnBackToMainWindow_Click"/>
+        
+        <blazor:BlazorWebView HostPage="wwwroot/Index.html" Services="{DynamicResource services}" Margin="0,70,0,0">
+            <blazor:BlazorWebView.RootComponents>
+                <blazor:RootComponent Selector="#app" ComponentType="{x:Type local:SimulationStats}" />
+            </blazor:BlazorWebView.RootComponents>
+        </blazor:BlazorWebView>
 
     </Grid>
 </Window>
