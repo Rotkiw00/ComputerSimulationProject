@@ -7,6 +7,31 @@ namespace ElectionSimulatorWPF
 {
 	public partial class SimulationStats
 	{
+		// Zaciągane z WPF dane
+		// trzeba je obrobić i przypisać do congifa danego wykresu
+		private Results _simulationResults;
+		public Results SimulationResults
+		{
+			get => _simulationResults; set
+			{
+				_simulationResults = value;
+				StateHasChanged();
+			}
+		}
+
+		private bool _isDataLoaded;
+		public bool IsDataLoaded
+		{
+			get => _isDataLoaded; set
+			{
+				_isDataLoaded = value;
+				StateHasChanged();
+			}
+		}
+
+		// wykresy z tego nugeta muszą być obiektami
+		// TODO: trzeba ogarnąć, żeby one nie były tak luźno
+		// w kodzie
 		private BarChartConfig _barChartConfig1;
 		private Chart _barChart1;
 
@@ -16,8 +41,12 @@ namespace ElectionSimulatorWPF
 		private DoughnutChartConfig _doughnutChartConfig3;
 		private Chart _doughnutChart3;
 
-		protected override async Task OnInitializedAsync()
+		// wykresy NIE mogą być wyświetlane przy inicjalizacji WebView
+		// TODO: Dorzucić jakąś flagę, wskazującą na otrzymanie danych i możliwość wyświetlenia wykresów
+		protected override Task OnInitializedAsync()
 		{
+			AppState.SimulationStatsComponent = this;
+
 			_barChartConfig1 = new BarChartConfig()
 			{
 				Options = new Options()
@@ -34,13 +63,17 @@ namespace ElectionSimulatorWPF
 				}
 			};
 
-			_barChartConfig1.Data.Labels = ["January", "February", "March"];
+			_barChartConfig1.Data.Labels = ["Koalicja Obywatelska",
+				"Zjednoczona Prawica",
+				"Trzecia Droga",
+				"Nowa Lewica",
+				"Konfederacja",
+				"Bezpartyjni Samorządowcy"];
 			List<decimal?> data1 = [100, 200, 400];
 
 			_barChartConfig1.Data.Datasets.Add(new BarDataset()
 			{
 				Data = data1,
-				BackgroundColor = ["yellow", "red", "blue"],
 				BorderWidth = 1
 			});
 
@@ -101,6 +134,7 @@ namespace ElectionSimulatorWPF
 				BackgroundColor = ["yellow", "red", "blue"],
 				HoverOffset = 4
 			});
+			return Task.CompletedTask;
 		}		
 	}
 }

@@ -8,25 +8,39 @@
 @using PSC.Blazor.Components.Chartjs.Models.Doughnut
 @using PSC.Blazor.Components.Chartjs.Models.Line
 
-<h3 class="center">Wyniki wyborów - poparcie</h3>
-
 <br />
 
-<Chart Config="_barChartConfig1" @ref="_barChart1" Height="450px"></Chart>
+@{
+	// Pierwsze ³adowanie jest inicjalizacyjne - obiekty s¹ puste
+	// TODO: ogarn¹æ w taki sposób, ¿eby móc pobraæ dane do wykresów
+		// ,ale NIE w fazie INICJALIZACJI
+	if (IsDataLoaded)
+	{
+		<div class="center">
+			<h3 class="center">Wyniki poparcia w wyborach</h3>
+			<Chart Config="_barChartConfig1" @ref="_barChart1" Height="450px"></Chart>
+		</div>
 
-<br />
-<hr />
-<br />
+		<br />
+		<hr />
+		<br />
 
-<div class="center">
-	<div class="child">
-		<h3 class="center">Rozk³ad mandatów SEJM</h3>
-		<Chart Config="_doughnutChartConfig2" @ref="_doughnutChart2" Height="300px"></Chart>
-	</div>
-	<div class="child">
-		<h3 class="center">Rozk³ad mandatów SENAT</h3>
-		<Chart Config="_doughnutChartConfig3" @ref="_doughnutChart3" Height="300px"></Chart>
-	</div>
-</div>
+
+		<div class="center">
+			<div class="child">
+				<h3 class="center">Rozk³ad mandatów SEJM</h3>
+				<Chart Config="_doughnutChartConfig2" @ref="_doughnutChart2" Height="300px"></Chart>
+			</div>
+			<div class="child">
+				<h3 class="center">Rozk³ad mandatów SENAT</h3>
+				<Chart Config="_doughnutChartConfig3" @ref="_doughnutChart3" Height="300px"></Chart>
+			</div>
+		</div>
+	}
+	else
+	{
+		<div class="center"><h1>Za³aduj wyniki i wyœwietl</h1></div>
+	}
+}
 
 <br />
