@@ -13,9 +13,104 @@
 @{
 	// Pierwsze ³adowanie jest inicjalizacyjne - obiekty s¹ puste
 	// TODO: ogarn¹æ w taki sposób, ¿eby móc pobraæ dane do wykresów
-		// ,ale NIE w fazie INICJALIZACJI
-	if (IsDataLoaded)
+	// ,ale NIE w fazie INICJALIZACJI
+	if (SimulationResults is not null)
 	{
+		#region Bar Chart - wyniki poparcia dla PARTII
+		_barChartConfig1 = new BarChartConfig()
+		{
+			Options = new Options()
+			{
+				Plugins = new Plugins()
+				{
+					Legend = new Legend()
+					{
+						Align = Align.Center,
+						Display = false,
+						Position = LegendPosition.Right,
+					}
+				},
+			}
+		};
+
+		#region Komentarz
+		/*
+			* Napisaæ metodê do zwracania etykiet
+			* oraz danych zserializowanych do decimal?
+			* Powi¹zaæ te dane z przekazywaniem zdeserializowanych danych z
+			* JSONa
+			*/
+		#endregion
+
+		_barChartConfig1.Data.Labels = GetElectionPartiesNames().ToList();
+		List<decimal?> data1 = GetElectionResults().ToList();
+
+		_barChartConfig1.Data.Datasets.Add(new BarDataset()
+		{
+			Data = data1,
+			BorderWidth = 1,
+			//BackgroundColor =
+		});
+		#endregion
+
+		#region Doughnut Chart - rozk³ad mandatów SEJM		
+		_doughnutChartConfig2 = new DoughnutChartConfig()
+		{
+			Options = new Options()
+			{
+				Responsive = true,
+				MaintainAspectRatio = false,
+				Plugins = new Plugins()
+				{
+					Legend = new Legend()
+					{
+						Display = true,
+						Position = LegendPosition.Left
+					}
+				}
+			}
+		};
+
+		_doughnutChartConfig2.Data.Labels = ["January", "February", "March"];
+		List<decimal?> data2 = [100, 200, 400];
+
+		_doughnutChartConfig2.Data.Datasets.Add(new DoughnutDataset()
+		{
+			Data = data2,
+			BackgroundColor = ["yellow", "red", "blue"],
+			HoverOffset = 4
+		});
+		#endregion
+
+		#region Doughnut Chart - rozk³ad mandatów SENAT
+		_doughnutChartConfig3 = new DoughnutChartConfig()
+		{
+			Options = new Options()
+			{
+				Responsive = true,
+				MaintainAspectRatio = false,
+				Plugins = new Plugins()
+				{
+					Legend = new Legend()
+					{
+						Display = true,
+						Position = LegendPosition.Left
+					}
+				}
+			}
+		};
+
+		_doughnutChartConfig3.Data.Labels = ["January", "February", "March"];
+		List<decimal?> data = [100, 200, 400];
+
+		_doughnutChartConfig3.Data.Datasets.Add(new DoughnutDataset()
+		{
+			Data = data,
+			BackgroundColor = ["yellow", "red", "blue"],
+			HoverOffset = 4
+		});
+		#endregion
+
 		<div class="center">
 			<h3 class="center">Wyniki poparcia w wyborach</h3>
 			<Chart Config="_barChartConfig1" @ref="_barChart1" Height="450px"></Chart>
@@ -24,7 +119,6 @@
 		<br />
 		<hr />
 		<br />
-
 
 		<div class="center">
 			<div class="child">
