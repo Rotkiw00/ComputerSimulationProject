@@ -15,3 +15,9 @@ public enum ElectionType
     Sejm,
     Senat
 }
+
+public enum MapMode
+{
+    Normal,
+    Result
+}

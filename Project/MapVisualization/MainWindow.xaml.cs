@@ -1,11 +1,15 @@
 ﻿using System.IO;
+using System.IO.Compression;
 using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
-using WebScraper;
+using ElectionSimulatorLibrary;
+using ElectionSimulatorLibrary.WPF;
+
+using Color = System.Drawing.Color;
 
 namespace MapVisualization
 {
@@ -14,8 +18,7 @@ namespace MapVisualization
     /// </summary>
     public partial class MainWindow : Window
     {
-
-        Dictionary<string, List<Region>>? Data;
+        private bool dataExists = false;
 
         public MainWindow()
         {
@@ -23,14 +26,15 @@ namespace MapVisualization
 
             SejmButton.IsEnabled = false;
             SenatButton.IsEnabled = false;
+            ExportButton.IsEnabled = false;
         }
 
         private void FileButton_Click(object sender, RoutedEventArgs e)
         {
             var dialog = new Microsoft.Win32.OpenFileDialog
             {
-                DefaultExt = ".json",
-                Filter = "JSON files (.json)|*.json"
+                DefaultExt = ".map",
+                Filter = "Simulation map files (.map)|*.map"
             };
 
             bool? result = dialog.ShowDialog();
@@ -39,237 +43,93 @@ namespace MapVisualization
 
             string fileName = dialog.FileName;
 
-            try
-            {
-                var json = File.ReadAllText(fileName);
-                Data = JsonSerializer.Deserialize<Dictionary<string, List<Region>>>(json);
-            }
-            catch
-            {
-                MessageBox.Show("Unable to load file.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
+            bool LoadData = SimMap.LoadDataFromFile(fileName);
 
-
-            if (Data == null || Data.Count != 2)
-            {
-                return;
-            }
-
-            if (Data.ContainsKey("sejm"))
+            if (LoadData)
             {
                 SejmButton.IsEnabled = true;
                 SejmButton.Visibility = Visibility.Visible;
-            }
 
-            if (Data.ContainsKey("senat"))
-            {
                 SenatButton.IsEnabled = true;
                 SenatButton.Visibility = Visibility.Visible;
+
+                ExportButton.IsEnabled = true;
+                ExportButton.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                MessageBox.Show("Unable to load file.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
         }
 
         private void SejmButton_Click(object sender, RoutedEventArgs e)
         {
-            if (Data != null) ShowCountryMap(Data["sejm"], "sejm");
+            ShowMap(ElectionType.Sejm, 0);
         }
 
         private void SenatButton_Click(object sender, RoutedEventArgs e)
         {
-            if (Data != null) ShowCountryMap(Data["senat"], "senat");
+            ShowMap(ElectionType.Senat, 0);
         }
 
-        private void ShowCountryMap(List<Region> districts, string title)
+        private void ExportButton_Click(object sender, RoutedEventArgs e)
         {
-            Window countryMap = new Window();
-            countryMap.Width = 1000;
-            countryMap.Height = 1000;
-            countryMap.Title = $"Country map - {title}";
-            var canvas = new Canvas();
-            canvas.Width = 1000;
-            canvas.Height = 1000;
+            
+        }
+
+        private void ShowMap(ElectionType electionType, int regionId)
+        {
+            double size = 800;
+            Window mapWindow = new Window();
+            mapWindow.Width = size;
+            mapWindow.Height = size;
+            mapWindow.Title = $"{ElectionType.Sejm.ToString("G")} - id: {regionId}";
+            
 
             Window countryNavigation = new Window();
             countryNavigation.Width = 200;
-            countryNavigation.Title = $"Navigation - {title}";
+            countryNavigation.Title = $"Navigation - id: {regionId}";
             var scrollViewer = new ScrollViewer();
             var stackPanel = new StackPanel();
             stackPanel.Orientation = Orientation.Vertical;
 
-            var districtList = districts.Select((district, index) => (district.Inner, index)).ToList();
-
-            double min_x = 9999;
-            double min_y = 9999;
-            double max_x = 0;
-            double max_y = 0;
-
-            foreach (var region in districtList)
+            SimMap.RegionClicked onClick = delegate (int id)
             {
-                foreach (var regionElement in region.Inner!)
+                ShowMap(electionType, id);
+            };
+
+            SimMap.Creator creator = new()
+            {
+                Size = size,
+                ElectionType = electionType,
+                MapMode = MapMode.Normal,
+                RegionId = regionId,
+                Color = Color.Red,
+                OnClick = onClick,
+                StrokeThickness = 1
+            };
+
+            SimMap map = creator.Create();
+            if(map != null)
+            {
+                var mapData = map.GetMap();
+                mapWindow.Content = mapData.Item1;
+                if(mapData.Item2 != null)
                 {
-                    foreach (var coord in regionElement.Borders!)
+                    foreach (var button in mapData.Item2)
                     {
-                        if (coord[0] < min_x) min_x = coord[0];
-                        if (coord[1] < min_y) min_y = coord[1];
-                        if (coord[0] > max_x) max_x = coord[0];
-                        if (coord[1] > max_y) max_y = coord[1];
+                        stackPanel.Children.Add(button);
                     }
                 }
             }
 
-            double range_x = max_x - min_x;
-            double range_y = max_y - min_y;
-
-            foreach (var region in districtList)
-            {
-                List<Polygon> localPolygonList = new();
-                foreach (var regionElement in region.Inner!)
-                {
-                    Polygon polygon = new Polygon();
-                    PointCollection points = new();
-                    foreach (var coord in regionElement.Borders!)
-                    {
-
-                        points.Add(new(
-                            ((coord[0] - min_x) / range_x) * 1000,
-                            1000 - ((coord[1] - min_y) / range_y) * 1000));
-                    }
-                    polygon.Points = points;
-
-                    polygon.Stroke = Brushes.Black;
-                    polygon.StrokeThickness = 4;
-                    polygon.Fill = Brushes.LightGray;
-
-                    localPolygonList.Add(polygon);
-                    canvas.Children.Add(polygon);
-                }
-
-                var onClick = () => { ShowElementMap(districts[region.index]); };
-
-                RegionButton navButton = new(localPolygonList, districts[region.index], onClick);
-                stackPanel.Children.Add(navButton);
-
-                foreach (var polygon in localPolygonList)
-                {
-                    polygon.IsMouseDirectlyOverChanged += (object sender, DependencyPropertyChangedEventArgs e) =>
-                    {
-                        foreach (var p in localPolygonList)
-                        {
-                            if ((bool)e.NewValue == true)
-                            {
-                                p.Fill = Brushes.Red;
-                            }
-                            else
-                            {
-                                p.Fill = Brushes.LightGray;
-                            }
-                        }
-                    };
-                    polygon.MouseUp += (object sender, MouseButtonEventArgs e) =>
-                    {
-                        onClick?.Invoke();
-                    };
-                }
-            }
-
-            countryMap.Content = canvas;
-            countryMap.Show();
+            //mapWindow.SizeToContent = SizeToContent.WidthAndHeight;
+            mapWindow.Show();
 
             scrollViewer.Content = stackPanel;
             countryNavigation.Content = scrollViewer;
             countryNavigation.Show();
-        }
-
-        private void ShowElementMap(Region region)
-        {
-            var regionList = region.Inner;
-            if (regionList == null)
-                return;
-
-            Window elementMap = new Window();
-            elementMap.Width = 1000;
-            elementMap.Height = 1000;
-            elementMap.Title = $"Map - {region.Name}";
-            var canvas = new Canvas();
-            canvas.Width = 1000;
-            canvas.Height = 1000;
-
-            Window mapNavigation = new Window();
-            mapNavigation.Width = 200;
-            mapNavigation.Title = $"Navigation -  {region.Name}";
-            var scrollViewer = new ScrollViewer();
-            var stackPanel = new StackPanel();
-            stackPanel.Orientation = Orientation.Vertical;
-
-            double min_x = 9999;
-            double min_y = 9999;
-            double max_x = 0;
-            double max_y = 0;
-
-            foreach (var innerRegion in regionList)
-            {
-                foreach (var coord in innerRegion.Borders!)
-                {
-                    if (coord[0] < min_x) min_x = coord[0];
-                    if (coord[1] < min_y) min_y = coord[1];
-                    if (coord[0] > max_x) max_x = coord[0];
-                    if (coord[1] > max_y) max_y = coord[1];
-                }
-            }
-
-            double range_x = max_x - min_x;
-            double range_y = max_y - min_y;
-
-            foreach (var innerRegion in regionList)
-            {
-                Polygon polygon = new Polygon();
-                PointCollection points = new();
-                foreach (var coord in innerRegion.Borders!)
-                {
-                    points.Add(new(
-                        ((coord[0] - min_x) / range_x) * 1000,
-                        1000 - ((coord[1] - min_y) / range_y) * 1000));
-                }
-                polygon.Points = points;
-
-                polygon.Stroke = Brushes.Black;
-                polygon.StrokeThickness = 4;
-                polygon.Fill = Brushes.LightGray;
-
-                canvas.Children.Add(polygon);
-
-                var onClick = () => { ShowElementMap(innerRegion); };
-
-                RegionButton navButton = new([polygon], innerRegion, onClick);
-                stackPanel.Children.Add(navButton);
-
-
-                polygon.IsMouseDirectlyOverChanged += (object sender, DependencyPropertyChangedEventArgs e) =>
-                {
-
-                    if ((bool)e.NewValue == true)
-                    {
-                        ((Polygon)sender).Fill = Brushes.Red;
-                    }
-                    else
-                    {
-                        ((Polygon)sender).Fill = Brushes.LightGray;
-                    }
-
-                };
-                polygon.MouseUp += (object sender, MouseButtonEventArgs e) =>
-                {
-                    onClick?.Invoke();
-                };
-
-            }
-
-            elementMap.Content = canvas;
-            elementMap.Show();
-
-            scrollViewer.Content = stackPanel;
-            mapNavigation.Content = scrollViewer;
-            mapNavigation.Show();
         }
     }
 }

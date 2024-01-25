@@ -8,7 +8,7 @@ public class Region
     public bool Inhabited { get; set; } = false;
     public List<List<double[]>>? Borders { get; set; } = null;
     public List<int>? Inner { get; set; } = null;
-    public int SenatDistrictId { get; }
+    public int SenatDistrictId { get; set; }
     public int SejmDistrictId
     {
         get
@@ -88,7 +88,9 @@ public class Region
     }
 
     [JsonConverter(typeof(JsonStringEnumConverter))]
-    public RegionType Type { get; }
+    public RegionType Type { get; set; }
+
+    public ElectionType ElectionType { set; get; } = ElectionType.Senat;
 
     public Region() { }
     public Region(int regionId, string name, RegionType type, int senatId)
