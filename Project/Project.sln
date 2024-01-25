@@ -15,9 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ElectionSimulatorLibrary", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{EE08712D-46B1-4EF7-B2C1-4F57CEE5B1CF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaseValuesGenerator", "BaseValuesGenerator\BaseValuesGenerator.csproj", "{FB3163BF-A322-454F-99D0-A473DE1F5982}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimulationBalancer", "SimulationBalancer\SimulationBalancer.csproj", "{0208EB54-D423-4AB1-9690-5640728261CC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimulationBalancer", "SimulationBalancer\SimulationBalancer.csproj", "{0208EB54-D423-4AB1-9690-5640728261CC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,10 +43,6 @@ Global
 		{C9817E45-0FC4-4C83-B7AE-43F695B389CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C9817E45-0FC4-4C83-B7AE-43F695B389CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C9817E45-0FC4-4C83-B7AE-43F695B389CC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FB3163BF-A322-454F-99D0-A473DE1F5982}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FB3163BF-A322-454F-99D0-A473DE1F5982}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FB3163BF-A322-454F-99D0-A473DE1F5982}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FB3163BF-A322-454F-99D0-A473DE1F5982}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0208EB54-D423-4AB1-9690-5640728261CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0208EB54-D423-4AB1-9690-5640728261CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0208EB54-D423-4AB1-9690-5640728261CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -60,7 +54,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{3C434EC2-E8DA-4846-9BFA-A08137393DE8} = {EE08712D-46B1-4EF7-B2C1-4F57CEE5B1CF}
 		{527EF529-259C-4D81-8778-6321A057547D} = {EE08712D-46B1-4EF7-B2C1-4F57CEE5B1CF}
-		{FB3163BF-A322-454F-99D0-A473DE1F5982} = {EE08712D-46B1-4EF7-B2C1-4F57CEE5B1CF}
 		{0208EB54-D423-4AB1-9690-5640728261CC} = {EE08712D-46B1-4EF7-B2C1-4F57CEE5B1CF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
