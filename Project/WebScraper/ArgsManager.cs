@@ -6,7 +6,7 @@ public static class ArgsManager
     {
         if (args.Contains("-h") || args.Contains("--help"))
         {
-            Console.WriteLine("WebScraper tool v0.1\n");
+            Console.WriteLine("WebScraper tool v2.0\n");
             Console.WriteLine("-h / --help              show basic information");
             Console.WriteLine("-f / --file <PATH>       output file path (directory must exists)");
             Console.WriteLine("-d / --delay <VALUE>     delay between HTTP requests (in milliseconds)");

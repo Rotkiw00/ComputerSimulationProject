@@ -1,4 +1,4 @@
-﻿namespace WebScraper;
+﻿namespace ElectionSimulatorLibrary;
 
 public enum RegionType
 {

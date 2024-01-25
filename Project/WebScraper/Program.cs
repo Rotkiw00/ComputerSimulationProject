@@ -4,10 +4,14 @@ if (exit) return;
 
 var webScraper = new WebScraper.WebScraper(delay);
 
-var result = await webScraper.RunAsync();
+await webScraper.RunAsync();
 
-string fileName = "RegionsBorderData.json";
-string json = JsonSerializer.Serialize(result);
-File.WriteAllText(Path.Combine(path, fileName), json);
+string fileName = "RegionsData";
+string dataPath = "MapData";
+ZipFile.CreateFromDirectory(dataPath, $"{fileName}.zip");
+if (File.Exists(Path.Combine(path, $"{fileName}.map")))
+    File.Delete(Path.Combine(path, $"{fileName}.map"));
+File.Move($"{fileName}.zip", Path.Combine(path, $"{fileName}.map"));
+Directory.Delete(dataPath, true);
 
-Console.WriteLine($"[SYSTEM] Regions' border data saved in {Path.Combine(path, fileName)}");
+Console.WriteLine($"[SYSTEM] Regions' border data saved in {Path.Combine(path, $"{fileName}.map")}");
