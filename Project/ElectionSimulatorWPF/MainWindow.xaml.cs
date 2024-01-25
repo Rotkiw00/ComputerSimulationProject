@@ -67,8 +67,9 @@ namespace ElectionSimulatorWPF
 
         private void btnStartSimulation_Click(object sender, RoutedEventArgs e)
         {
-            ///TODO: Uruchomienie widoku z mapą
-            ///
+            var configSimFormWindow = new ConfigSimulationFormWindow();
+            this.Visibility = Visibility.Collapsed;
+            configSimFormWindow.Show();
         }
 
         private void btnEnterSummaryWindow_Click(object sender, RoutedEventArgs e)
