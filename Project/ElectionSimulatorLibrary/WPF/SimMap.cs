@@ -49,7 +49,6 @@ public class SimMap : Canvas
     private List<RegionButton> navButtons;
     private List<RegionShape> shapes;
 
-    // TODO timer
     private SimMap(Creator creator)
     {
         this.size = creator.Size;
@@ -252,6 +251,21 @@ public class SimMap : Canvas
         return (this, navButtons);
     }
 
+    public void SetResult(List<Result> results)
+    {
+        if(mapMode == MapMode.Normal) return;
+
+        foreach (var result in results)
+        {
+            try
+            {
+                var shape = shapes.Where(s => s.RegionId == result.RegionId).Single();
+                shape.RegionResult = result;
+            }
+            catch (Exception e) { Console.WriteLine(e.Message); }
+        }
+    }
+
     public static bool RegionHasInner(int id)
     {
         if (id == 0)
@@ -277,33 +291,4 @@ public class SimMap : Canvas
         }
     }
 
-    public static bool LoadDataFromFile(string mapFilePath)
-    {
-        try
-        {
-            if (Directory.Exists("MapData")) Directory.Delete("MapData", true);
-            File.Copy(mapFilePath, "tmp.zip", true);
-            string extractPath = "MapData";
-            ZipFile.ExtractToDirectory("tmp.zip", extractPath);
-            File.Delete("tmp.zip");
-
-            bool dataExists = false;
-
-            if (Directory.Exists("MapData"))
-            {
-                dataExists = true;
-                for (int i = 1; i <= 100; i++)
-                {
-                    if (!File.Exists($"MapData/{i}.json"))
-                        dataExists = false;
-                }
-            }
-
-            return dataExists;
-        }
-        catch
-        {
-            return false;
-        }
-    }
 }

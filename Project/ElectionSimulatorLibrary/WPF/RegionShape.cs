@@ -24,7 +24,18 @@ public class RegionShape
     public double StrokeThickness { get; set; } = 1;
     private Brush ColorBrush { get; set; } = Brushes.Red;
 
-    // TODO result mode
+
+    private Result _regionResult = null;
+    public Result? RegionResult
+    {
+        get => _regionResult;
+        set
+        {
+            _regionResult = value;
+            ChangeColor();
+        }
+    }
+
     public void Setup()
     {
         ColorBrush = new SolidColorBrush(System.Windows.Media.Color
@@ -36,14 +47,8 @@ public class RegionShape
                 polygon.Stroke = Brushes.Black;
                 polygon.StrokeThickness = StrokeThickness;
 
-                if (MapMode == MapMode.Normal)
-                {
-                    polygon.Fill = Brushes.LightGray;
-                }
-                else
-                {
-                    polygon.Fill = ColorBrush;
-                }
+                polygon.Fill = Brushes.LightGray;
+
                 polygon.IsMouseDirectlyOverChanged += (object sender, DependencyPropertyChangedEventArgs e) =>
                 {
                     if ((bool)e.NewValue == true)
@@ -75,7 +80,14 @@ public class RegionShape
         }
         else
         {
-            // TODO result mode
+            Brush tmpBrush = new SolidColorBrush(System.Windows.Media.Color
+                .FromArgb(127, Color.R, Color.G, Color.B));
+
+            if (Polygons != null)
+                foreach (var polygon in Polygons)
+                {
+                    polygon.Fill = tmpBrush;
+                }
         }
     }
 
@@ -91,12 +103,43 @@ public class RegionShape
         }
         else
         {
-            // TODO result mode
+            if (Polygons != null)
+                foreach (var polygon in Polygons)
+                {
+                    polygon.Fill = ColorBrush;
+                }
         }
     }
 
     public void ChangeColor()
     {
-        // TODO result mode
+        if (_regionResult.Final)
+        {
+            var color = _regionResult.Mandates
+                .OrderByDescending((x) => x.Item2)
+                .First().Item1.Color;
+
+            Color = color;
+
+            ColorBrush = new SolidColorBrush(System.Windows.Media.Color
+            .FromArgb(255, Color.R, Color.G, Color.B));
+        }
+        else
+        {
+            var color = _regionResult.Popularity
+                .OrderByDescending((x) => x.Item2)
+                .First().Item1.Color;
+
+            Color = color;
+
+            ColorBrush = new SolidColorBrush(System.Windows.Media.Color
+            .FromArgb(255, Color.R, Color.G, Color.B));
+        }
+
+        if (Polygons != null)
+            foreach (var polygon in Polygons)
+            {
+                polygon.Fill = ColorBrush;
+            }
     }
 }
