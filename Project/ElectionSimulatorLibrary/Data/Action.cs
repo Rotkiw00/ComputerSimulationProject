@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ElectionSimulatorLibrary.Data
+namespace ElectionSimulatorLibrary;
+
+public class Action
 {
-    internal class Action
-    {
-    }
+
 }
