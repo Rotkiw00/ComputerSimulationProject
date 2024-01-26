@@ -21,3 +21,13 @@ public enum MapMode
     Normal,
     Result
 }
+
+public enum ResponseCode
+{
+    Undefined,
+    GeneratePopulation,
+    Calculate,
+    Done,   // z folderem do wyczyszczenia
+    Result,
+    Data
+}
