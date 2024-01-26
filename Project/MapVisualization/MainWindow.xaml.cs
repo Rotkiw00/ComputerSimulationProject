@@ -105,7 +105,6 @@ namespace MapVisualization
             // result mode test
             if (regionId == 0)
             {
-                
                 creator.MapMode = MapMode.Result;
             }
 
@@ -141,7 +140,7 @@ namespace MapVisualization
             windowNavigation.Show();
         }
 
-        private List<Result> GetRandomResult(ElectionType type)
+        private static List<Result> GetRandomResult(ElectionType type)
         {
             List<Result> result = new List<Result>();
             Random random = new Random();
