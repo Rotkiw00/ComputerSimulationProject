@@ -10,6 +10,18 @@ public class DemographySettings
 {
     public Dictionary<RegionType, int> PlaceWeight { get; } = new Dictionary<RegionType, int>();
     public List<int> PopulationPerDistrict { get; } = new List<int>();
+    private double _turnout = 0;
+    public double Turnout
+    { 
+        get => _turnout;
+        set
+        {
+            if (value < 0) _turnout = 0.01;
+            else if (value > 1) _turnout = 1;
+            else _turnout = value;
+
+        } 
+    }
 
     public DemographySettings()
     {
