@@ -36,7 +36,7 @@ public class RegionButton : System.Windows.Controls.Button
         base.OnMouseLeave(e);
 
         if (_shape?.Polygons != null)
-            _shape.HoverIn();
+            _shape.HoverOut();
     }
 
     protected override void OnClick()

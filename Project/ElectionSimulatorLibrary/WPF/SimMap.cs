@@ -60,14 +60,11 @@ public class SimMap : Canvas
         this.onClick = creator.OnClick;
         this.strokeThickness = creator.StrokeThickness;
 
-        // TODO if (!Directory.Exists("MapData")) { }
-
         this.Width = this.size;
         this.Height = this.size;
 
         List<Region> regionList = GetRegionList();
-        var space = EstimateSpace(regionList);
-        DrawMap(regionList, space.scale, space.spaceX, space.spaceY);
+        DrawMap(regionList);
     }
 
     public delegate void RegionClicked(int id);
@@ -181,8 +178,11 @@ public class SimMap : Canvas
         return regionList;
     }
 
-    private (double scale, double spaceX, double spaceY) EstimateSpace(List<Region> regionList)
+    private void DrawMap(List<Region> regionList)
     {
+        navButtons = new();
+        shapes = new();
+
         double min_x = 9999;
         double min_y = 9999;
         double max_x = 0;
@@ -205,30 +205,6 @@ public class SimMap : Canvas
         double range_x = max_x - min_x;
         double range_y = max_y - min_y;
 
-        double original_x = regionList[0].Borders![0][0][0];
-        double test_x = ((original_x - min_x) / range_x) * size;
-        double scale_x = test_x / original_x;
-
-        double original_y = regionList[0].Borders![0][0][1];
-        double test_y = ((original_y - min_y) / range_y) * size;
-        double scale_y = test_y / original_y;
-
-        double scale = scale_x < scale_y ? scale_x : scale_y;
-
-        double new_max_x = scale * max_x;
-        double new_max_y = scale * max_y;
-
-        double spaceX = (size - new_max_x) / 2;
-        double spaceY = (size - new_max_y) / 2;
-
-        return (scale, spaceX, spaceY);
-    }
-
-    private void DrawMap(List<Region> regionList, double scale, double spaceX, double spaceY)
-    {
-        navButtons = new();
-        shapes = new();
-
         foreach (var region in regionList)
         {
             RegionShape shape = new RegionShape();
@@ -244,8 +220,8 @@ public class SimMap : Canvas
 
                 foreach (var coord in polygonData)
                 {
-                    double x = (coord[0] * scale) + spaceX;
-                    double y = (coord[1] * scale) + spaceY;
+                    double x = ((coord[0] - min_x) / range_x) * size;
+                    double y = ((coord[1] - min_y) / range_y) * size;
                     points.Add(new(x, size - y));
                 }
 

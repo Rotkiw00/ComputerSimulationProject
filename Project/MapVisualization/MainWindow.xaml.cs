@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Drawing;
+using System.IO;
 using System.IO.Compression;
 using System.Text.Json;
 using System.Windows;
@@ -9,6 +10,7 @@ using System.Windows.Shapes;
 using ElectionSimulatorLibrary;
 using ElectionSimulatorLibrary.WPF;
 
+using Region = ElectionSimulatorLibrary.Region;
 using Color = System.Drawing.Color;
 
 namespace MapVisualization
@@ -26,7 +28,6 @@ namespace MapVisualization
 
             SejmButton.IsEnabled = false;
             SenatButton.IsEnabled = false;
-            ExportButton.IsEnabled = false;
         }
 
         private void FileButton_Click(object sender, RoutedEventArgs e)
@@ -52,9 +53,6 @@ namespace MapVisualization
 
                 SenatButton.IsEnabled = true;
                 SenatButton.Visibility = Visibility.Visible;
-
-                ExportButton.IsEnabled = true;
-                ExportButton.Visibility = Visibility.Visible;
             }
             else
             {
@@ -73,11 +71,6 @@ namespace MapVisualization
             ShowMap(ElectionType.Senat, 0);
         }
 
-        private void ExportButton_Click(object sender, RoutedEventArgs e)
-        {
-            
-        }
-
         private void ShowMap(ElectionType electionType, int regionId)
         {
             double size = 800;
@@ -86,10 +79,9 @@ namespace MapVisualization
             mapWindow.Height = size;
             mapWindow.Title = $"{ElectionType.Sejm.ToString("G")} - id: {regionId}";
             
-
-            Window countryNavigation = new Window();
-            countryNavigation.Width = 200;
-            countryNavigation.Title = $"Navigation - id: {regionId}";
+            Window windowNavigation = new Window();
+            windowNavigation.Width = 200;
+            windowNavigation.Title = $"Navigation - id: {regionId}";
             var scrollViewer = new ScrollViewer();
             var stackPanel = new StackPanel();
             stackPanel.Orientation = Orientation.Vertical;
@@ -123,13 +115,19 @@ namespace MapVisualization
                     }
                 }
             }
+            else
+            {
+                mapWindow.Close();
+                windowNavigation.Close();
+                return;
+            }
 
-            //mapWindow.SizeToContent = SizeToContent.WidthAndHeight;
+           mapWindow.SizeToContent = SizeToContent.WidthAndHeight;
             mapWindow.Show();
 
             scrollViewer.Content = stackPanel;
-            countryNavigation.Content = scrollViewer;
-            countryNavigation.Show();
+            windowNavigation.Content = scrollViewer;
+            windowNavigation.Show();
         }
     }
 }

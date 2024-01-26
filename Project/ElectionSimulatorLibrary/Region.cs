@@ -136,7 +136,7 @@ public class Region
 
     public string GetCSharpDefinition()
     {
-        string result = $"new {this.GetType().Name}({RegionId}, {Name}, {this.Type.GetType().Name}.{Type.ToString("G")}, {SenatDistrictId}, {OsmId}, {Inhabited}, {{0}}, {{1}});";
+        string result = $"new {this.GetType().Name}({RegionId}, \"{Name}\", {this.Type.GetType().Name}.{Type.ToString("G")}, {SenatDistrictId}, {OsmId}, {Inhabited}, {{0}}, {{1}});";
 
         string bordersResult = "";
         if (Borders != null && Borders.Count != 0)
