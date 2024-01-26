@@ -6,9 +6,6 @@ using System.Threading.Tasks;
 
 namespace ElectionSimulatorLibrary;
 
-public abstract class Agent
+public class PoliticianLeader : Politician
 {
-    public int LockTime { get; set; } = -1;
-    public bool Available { get; set; } = true;
-
 }

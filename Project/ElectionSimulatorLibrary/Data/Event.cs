@@ -4,9 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ElectionSimulatorLibrary.Data
+namespace ElectionSimulatorLibrary;
+
+public class Event
 {
-    internal class Event
-    {
-    }
 }
