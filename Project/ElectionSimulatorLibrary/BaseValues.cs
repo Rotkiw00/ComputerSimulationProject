@@ -82,4 +82,20 @@ public class BaseValues
             _ => 0,
         };
     }
+
+    public static int TimeToHour(int time)
+    {
+        if (time < 4)
+        {
+            switch(time)
+            {
+                case 0: return 20;
+                case 1: return 21;
+                case 2: return 22;
+                case 3: return 23;
+            }
+        }
+
+        return (time - 1) % 24;
+    }
 }
