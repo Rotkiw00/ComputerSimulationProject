@@ -7,7 +7,23 @@
         mc:Ignorable="d"
         Title="Symulacja" WindowState="Maximized" WindowStyle="SingleBorderWindow" ResizeMode="CanMinimize"
         WindowStartupLocation="CenterScreen" d:DesignHeight="1000" d:DesignWidth="1500">
-    <Grid>
+    
+    <Grid Name="mapVisualisationGrid">
+        
+        <Button x:Name="btnBackToMainWindow" Content="Main" HorizontalAlignment="Left" FontSize="30" Margin="1155,0,0,0" VerticalAlignment="Top" Height="55" Width="95" Click="btnBackToMainWindow_Click" Grid.Column="1"/>
 
+        <ScrollViewer Name="scrolViewerMapButtons">
+            <StackPanel Name="stackPanelMapButtons">
+                
+            </StackPanel>
+        </ScrollViewer>
+
+            <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="5*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        
+        
     </Grid>
 </Window>

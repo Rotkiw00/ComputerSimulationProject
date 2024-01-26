@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Xceed.Wpf.Toolkit;
 
 namespace ElectionSimulatorWPF
 {
@@ -21,6 +22,8 @@ namespace ElectionSimulatorWPF
 	{
 		private int gridsPartyCreator;
 		private List<TextBox> dynamicTextBoxes = [];
+		private List<Slider> dynamicSliders = [];
+		private List<ColorPicker> dynamicColorPickeres = [];
 
 		public ConfigSimulationFormWindow()
 		{
@@ -36,13 +39,11 @@ namespace ElectionSimulatorWPF
 
 		private void btnSaveConfigForm_Click(object sender, RoutedEventArgs e)
 		{
-			MessageBox.Show("Zapisywanie konfiguracji do symulacji", "Info");
-
 			var mapSimulationWindow = new MapSimulationWindow();
 			this.Visibility = Visibility.Collapsed;
 			mapSimulationWindow.Show();
 
-			// Zapisywanie kofiguracji ??
+			
 		}
 		
 		private void btnCreatePartiesControl_Click(object sender, RoutedEventArgs e)
@@ -55,17 +56,18 @@ namespace ElectionSimulatorWPF
 				{
 					for (int i = 0; i < gridsPartyCreator; i++)
 					{
-						CreatePartyControlForms();
+						CreatePartyControlForms(i);
 					}
 				}
 			}
 		}
 
-		private void CreatePartyControlForms()
+		private void CreatePartyControlForms(int id)
 		{
 			Grid grid = new()
 			{
-				Height = 50
+				Height = 100,
+				Margin = new Thickness(0,10,0,0),
 			};
 
 			ColumnDefinition column1 = new()
@@ -76,17 +78,32 @@ namespace ElectionSimulatorWPF
 			{
 				Width = new GridLength(1, GridUnitType.Star)
 			};
+			RowDefinition row1 = new()
+			{
+				Height = new GridLength(1, GridUnitType.Star)
+			};
+			RowDefinition row2 = new()
+			{
+				Height = new GridLength(1, GridUnitType.Star)
+			};
+			RowDefinition row3 = new()
+			{
+				Height = new GridLength(1, GridUnitType.Star)
+			};
 
 			grid.ColumnDefinitions.Add(column1);
 			grid.ColumnDefinitions.Add(column2);
+			grid.RowDefinitions.Add(row1);
+			grid.RowDefinitions.Add(row2);
+			grid.RowDefinitions.Add(row3);
 
 			Label label = new()
 			{
-				Content = "Ile partii politycznych do symulacji ?",
+				Content = $"#{id + 1} Partia. Nazwa:",
 				VerticalAlignment = VerticalAlignment.Center,
 				FontSize = 25,
 				Margin = new Thickness(10, 0, 0, 0),
-				Height = 44
+				Height = 40
 			};
 			Grid.SetColumn(label, 0);
 			grid.Children.Add(label);
@@ -96,22 +113,51 @@ namespace ElectionSimulatorWPF
 				Name = "txtParty",
 				VerticalAlignment = VerticalAlignment.Center,
 				FontSize = 23,
-				Margin = new Thickness(522, 0, 392, 0)
+				Margin = new Thickness(10, 0, 10, 0)
 			};
-			Grid.SetColumnSpan(textBox, 2);
+			Grid.SetColumn(textBox, 1);
 			grid.Children.Add(textBox);
 			dynamicTextBoxes.Add(textBox);
 
-			Button button = new()
+			Slider slider = new()
 			{
-				Name = "btnCreatePartiesControl",
-				Content = "Zatwierdź",
-				Margin = new Thickness(216, 9, 81, 10),
-				FontSize = 20
+				Name = "sliderParty",
+				VerticalAlignment = VerticalAlignment.Center,
+				Minimum = -100,
+				Maximum = 100,
+				TickFrequency = 100,
+				IsSnapToTickEnabled = true,
+				TickPlacement = System.Windows.Controls.Primitives.TickPlacement.Both
 			};
-			button.Click += btnCreatePartiesControl_Click;
-			Grid.SetColumn(button, 1);
-			grid.Children.Add(button);
+			Grid.SetRow(slider, 1);
+			Grid.SetColumnSpan(slider, 2);
+			grid.Children.Add(slider);
+			dynamicSliders.Add(slider);
+
+			Label colorLabel = new()
+			{
+				Content = $"#{id + 1} Kolor partii:",
+				VerticalAlignment = VerticalAlignment.Center,
+				FontSize = 25,
+				Margin = new Thickness(10, 0, 0, 0),
+				Height = 40
+			};
+			Grid.SetColumn(colorLabel, 0);
+			Grid.SetRow(colorLabel, 2);
+			grid.Children.Add(colorLabel);
+
+			ColorPicker colorPicker = new()
+			{
+				Name = "partyColorPicker",
+				DisplayColorAndName = true,
+				Height = 20,
+				VerticalAlignment= VerticalAlignment.Top,
+				Margin = new Thickness(10, 10, 10, 10)
+			};
+			Grid.SetRow(colorPicker, 2);
+			Grid.SetColumn(colorPicker, 1);
+			grid.Children.Add(colorPicker);
+			dynamicColorPickeres.Add(colorPicker);
 
 			stackPanelView.Children.Add(grid);
 		}

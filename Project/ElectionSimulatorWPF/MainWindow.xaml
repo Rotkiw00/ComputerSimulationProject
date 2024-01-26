@@ -27,32 +27,15 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        
+
         <!--Content Left Side-->
         <Label Grid.Row="0" Grid.ColumnSpan="4" Content="Symulator Wyborów Parlamentarnych" FontSize="40" FontWeight="Bold" Margin="10 0 0 0"/>
 
-        <Label Grid.Row="1" Grid.ColumnSpan="2" Content="Ostatnie symulacje" FontSize="35" FontWeight="Bold" VerticalAlignment="Center" Margin="10 0 0 0"/>
-        <TextBox Name="tbSearchLastSimulations" Grid.Row="1" Grid.ColumnSpan="2" FontSize="25" VerticalAlignment="Bottom" Padding="5" Margin="10 0 0 0" />
-        <Label Grid.Row="1" Grid.ColumnSpan="2" Content="Szukaj..." FontSize="25" VerticalAlignment="Bottom" Background="Transparent" Opacity="0.5" IsHitTestVisible="False" Margin="10 0 0 0"/>
-
-        <ListBox Name="lstBoxOfLastSimulations" Grid.Row="2" Grid.ColumnSpan="3" Grid.RowSpan="4" Margin="10 0 0 0" ItemTemplate="{DynamicResource ListOfSimulationsTemplate}">
-            <ListBox.Resources>
-                <DataTemplate x:Key="ListOfSimulationsTemplate">
-                    <Grid Width="200" Height="60">
-                        <Label Content="{Binding Name}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10 0 0 0" FontSize="20" FontWeight="Medium"/>
-                        <Label Content="{Binding ModificationDateTime}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10 25 0 0" FontSize="15" FontStyle="Italic"/>
-                    </Grid>
-                </DataTemplate>
-            </ListBox.Resources>
-        </ListBox>
-
-
         <!--Content Right Side-->
-        <Button Name="btnStartSimulation" Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="3" Margin="0 5 10 5" BorderThickness="5" Content="Rozpocznij symulacje" FontSize="35" FontWeight="Bold" Click="btnStartSimulation_Click"/>
-        <Button Name="btnLoadSimulation" Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="3" Margin="0 5 10 5" BorderThickness="5" Content="Załaduj symulacje" FontSize="35" FontWeight="Bold" Click="btnLoadSimulation_Click"/>
+        <Button Name="btnStartSimulation" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="3" Margin="0 5 10 5" BorderThickness="5" Content="Rozpocznij symulacje" FontSize="35" FontWeight="Bold" Click="btnStartSimulation_Click"/>
 
-        <Label Grid.Row="3" Grid.Column="4" Grid.ColumnSpan="2" Content="Informacje" FontSize="35" FontWeight="Bold" VerticalAlignment="Bottom"/>
-        <Button Name="btnHowToStartSim" Grid.Row="4" Grid.Column="4" Grid.ColumnSpan="3" Margin="0 5 10 5" BorderThickness="5" Content="Jak zacząć symulację ?" FontSize="35" FontWeight="Bold" Click="btnHowToStartSim_Click"/>
+        <Label Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2" Content="Informacje" FontSize="35" FontWeight="Bold" VerticalAlignment="Bottom"/>
+        <Button Name="btnHowToStartSim" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="3" Margin="0 5 10 5" BorderThickness="5" Content="Jak zacząć symulację ?" FontSize="35" FontWeight="Bold" Click="btnHowToStartSim_Click"/>
 
         <Label Grid.Row="5" Grid.Column="4" Grid.ColumnSpan="2" Content="Podsumowanie" FontSize="35" FontWeight="Bold" VerticalAlignment="Bottom"/>
         <Button Name="btnEnterSummaryWindow" Grid.Row="6" Grid.Column="4" Grid.ColumnSpan="3" Margin="0 5 10 5" BorderThickness="5" Content="Statystyka i wykresy" FontSize="35" FontWeight="Bold" Click="btnEnterSummaryWindow_Click"/>
