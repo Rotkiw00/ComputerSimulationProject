@@ -1,4 +1,5 @@
-﻿using System.IO.Compression;
+﻿using System.Drawing;
+using System.IO.Compression;
 
 namespace ElectionSimulatorLibrary;
 
@@ -97,5 +98,68 @@ public class BaseValues
         }
 
         return (time - 1) % 24;
+    }
+
+    public static DateTime TimeToDateTime(int time)
+    {
+        long sinceEpoch = 1691524800000;
+        long timeInMilis = 3600000 * (long)time;
+
+        sinceEpoch += timeInMilis;
+
+        return DateTimeOffset.FromUnixTimeMilliseconds(sinceEpoch).DateTime;
+    }
+
+    public static List<Result> GetRandomResult(ElectionType type)
+    {
+        List<Result> result = new List<Result>();
+        Random random = new Random();
+
+        PoliticalParty p1 = new PoliticalParty();
+        p1.Name = "P1";
+        p1.Color = Color.Red;
+
+        PoliticalParty p2 = new PoliticalParty();
+        p2.Name = "P2";
+        p2.Color = Color.Green;
+
+        PoliticalParty p3 = new PoliticalParty();
+        p3.Name = "P3";
+        p3.Color = Color.Blue;
+
+        if (type == ElectionType.Sejm)
+            for (int i = 1; i <= 41; i++)
+            {
+                double score1 = random.NextDouble();
+                double score2 = random.NextDouble();
+                double score3 = random.NextDouble();
+
+                Result singleResult = new Result();
+                singleResult.RegionId = i;
+
+                singleResult.Popularity.Add((p1, score1));
+                singleResult.Popularity.Add((p2, score2));
+                singleResult.Popularity.Add((p3, score3));
+
+                result.Add(singleResult);
+            }
+        else
+            for (int i = 1; i <= 100; i++)
+            {
+                double score1 = random.NextDouble();
+                double score2 = random.NextDouble();
+                double score3 = random.NextDouble();
+
+                Result singleResult = new Result();
+                singleResult.RegionId = i;
+
+                singleResult.Popularity.Add((p1, score1));
+                singleResult.Popularity.Add((p2, score2));
+                singleResult.Popularity.Add((p3, score3));
+
+                result.Add(singleResult);
+            }
+
+        return result;
     }
 }
