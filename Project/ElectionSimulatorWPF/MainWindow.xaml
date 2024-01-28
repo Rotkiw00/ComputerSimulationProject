@@ -37,8 +37,5 @@
         <Label Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2" Content="Informacje" FontSize="35" FontWeight="Bold" VerticalAlignment="Bottom"/>
         <Button Name="btnHowToStartSim" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="3" Margin="0 5 10 5" BorderThickness="5" Content="Jak zacząć symulację ?" FontSize="35" FontWeight="Bold" Click="btnHowToStartSim_Click"/>
 
-        <Label Grid.Row="5" Grid.Column="4" Grid.ColumnSpan="2" Content="Podsumowanie" FontSize="35" FontWeight="Bold" VerticalAlignment="Bottom"/>
-        <Button Name="btnEnterSummaryWindow" Grid.Row="6" Grid.Column="4" Grid.ColumnSpan="3" Margin="0 5 10 5" BorderThickness="5" Content="Statystyka i wykresy" FontSize="35" FontWeight="Bold" Click="btnEnterSummaryWindow_Click"/>
-
     </Grid>
 </Window>

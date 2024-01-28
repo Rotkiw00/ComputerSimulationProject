@@ -32,12 +32,5 @@ namespace ElectionSimulatorWPF
             this.Visibility = Visibility.Collapsed;
             configSimFormWindow.Show();
         }
-
-        private void btnEnterSummaryWindow_Click(object sender, RoutedEventArgs e)
-        {
-            var objectSecondWindow = new SummaryWindow();
-            this.Visibility = Visibility.Collapsed;
-            objectSecondWindow.Show();
-        }
     }
 }
