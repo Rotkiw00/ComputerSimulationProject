@@ -25,39 +25,89 @@ namespace ElectionSimulatorWPF
 		{
 			InitializeComponent();
 
-			bool isRegionDataLoaded = BaseValues.LoadDataFromFile("RegionsData.map");
+			try
+			{
+				bool isRegionDataLoaded = BaseValues.LoadDataFromFile("RegionsData.map");
+				if (isRegionDataLoaded is false) { Application.Current.Shutdown(); }
+			}
+			catch (Exception)
+			{
+				throw;
+			}
+		}
+
+		private void HandleResultMaps(ElectionType electionType, int id = 0)
+		{
+			SimMap.RegionClicked onClick = delegate (int id)
+			{
+				HandleResultMaps(electionType, id);
+			};
+
+			ShowMap(id, onClick);
+		}
+
+		private void ShowMap(int id, SimMap.RegionClicked onClick = null)
+		{
+			mapVisualisationGrid.Children.Clear(); // zmodyfikować canvas w XAMLu,
+												   // żeby czyścić tylko buttons i mapę, a nie wszystko
 
 			SimMap.Creator simMap = new()
 			{
-				Size = 1000,
-				Color = System.Drawing.Color.Red
+				Size = 900,
+				Color = System.Drawing.Color.Red,
+				OnClick = onClick,
+				RegionId = id
 			};
 
-			if (isRegionDataLoaded)
-			{
-				var map = simMap.Create();
-				var mapButtons = map.GetMap().Item2;
-				Grid.SetColumn(map, 1);
+			var map = simMap.Create();
+			var mapButtons = map.GetMap().Item2; // obsłuzyć wyjątek kiedy skończą się okręgi
+			Grid.SetColumn(map, 1);
+			Grid.SetRowSpan(map, 2);
+			mapVisualisationGrid.Children.Add(map);
 
-				foreach (var button in mapButtons)
-				{
-					Grid.SetColumn(button, 0);
-					stackPanelMapButtons.Children.Add(button);
-				}
-
-				mapVisualisationGrid.Children.Add(map);
-			}
-			else
+			foreach (var button in mapButtons)
 			{
-				MessageBox.Show("Nie można załadować danych do mapy.");
+				Grid.SetColumn(button, 0);
+				stackPanelMapButtons.Children.Add(button);
 			}
 		}
 
 		private void btnBackToMainWindow_Click(object sender, RoutedEventArgs e)
 		{
-			var mainwndw = new MainWindow();
+			var mainWndw = new MainWindow();
 			this.Visibility = Visibility.Collapsed;
-			mainwndw.Show();
+			mainWndw.Show();
+		}
+
+		private void btnEnterSummaryWindow_Click(object sender, RoutedEventArgs e)
+		{
+			var summaryWndw = new SummaryWindow();
+			this.Visibility = Visibility.Collapsed;
+			summaryWndw.Show();
+		}
+
+		private void btnBeginSimulation_Click(object sender, RoutedEventArgs e)
+		{
+			MessageBox.Show("Rozpoczynam symulacje");
+			// Wyniki dopiero po załadowaniu wynikowej mapy
+			/*
+			 * TUTAJ PROCES SYMULACJI
+			 */
+			// po załadowaniu wynikowej mapy odblokować
+			// podsumowanie oraz mapy sejmu i senatu (?)
+			btnEnterSummaryWindow.IsEnabled = true;
+			btnSejmResultsMapLoad.Visibility = Visibility.Visible;
+			btnSenatResultsMapLoad.Visibility = Visibility.Visible;
+		}
+
+		private void btnSejmResultsMapLoad_Click(object sender, RoutedEventArgs e)
+		{
+			HandleResultMaps(ElectionType.Sejm);
+		}
+
+		private void btnSenatResultsMapLoad_Click(object sender, RoutedEventArgs e)
+		{
+			HandleResultMaps(ElectionType.Senat);
 		}
 	}
 }

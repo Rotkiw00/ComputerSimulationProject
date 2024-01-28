@@ -7,23 +7,36 @@
         mc:Ignorable="d"
         Title="Symulacja" WindowState="Maximized" WindowStyle="SingleBorderWindow" ResizeMode="CanMinimize"
         WindowStartupLocation="CenterScreen" d:DesignHeight="1000" d:DesignWidth="1500">
-    
-    <Grid Name="mapVisualisationGrid">
-        
-        <Button x:Name="btnBackToMainWindow" Content="Main" HorizontalAlignment="Left" FontSize="30" Margin="1155,0,0,0" VerticalAlignment="Top" Height="55" Width="95" Click="btnBackToMainWindow_Click" Grid.Column="1"/>
 
-        <ScrollViewer Name="scrolViewerMapButtons">
-            <StackPanel Name="stackPanelMapButtons">
-                
-            </StackPanel>
+    <Grid Name="mapVisualisationGrid">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="4*"></ColumnDefinition>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="4*"></RowDefinition>
+            <RowDefinition Height="37*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <ScrollViewer Name="scrolViewerMapButtons" Grid.Column="0" Grid.RowSpan="2">
+            <StackPanel Name="stackPanelMapButtons"></StackPanel>
         </ScrollViewer>
 
-            <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition Width="5*"></ColumnDefinition>
-        </Grid.ColumnDefinitions>
+        <Border Grid.RowSpan="2" Grid.Column="2" BorderBrush="Black" BorderThickness="1">
+            <Grid>
 
-        
-        
+                <Button Name="btnBackToMainWindow" Content="Ekran startowy" HorizontalAlignment="Center" FontSize="30" VerticalAlignment="Top" Height="56" Width="200" Click="btnBackToMainWindow_Click" Grid.Row="0" Margin="0,10,0,0"/>
+                <Button Name="btnEnterSummaryWindow" IsEnabled="False" Content="WYNIKI" HorizontalAlignment="Center" FontSize="30" FontWeight="Bold" BorderThickness="4" VerticalAlignment="Top" Height="56" Width="200" Grid.Row="1" Margin="0,918,0,0" Click="btnEnterSummaryWindow_Click" />
+
+            </Grid>
+        </Border>
+
+        <Button Name="btnBeginSimulation" Grid.Column="1" Content="SYMULUJ" HorizontalAlignment="Center" FontSize="30" FontWeight="Bold" BorderThickness="4" BorderBrush="Red" Background="LightGreen" VerticalAlignment="Top" Height="60" Width="200" Margin="0,11,0,0" Click="btnBeginSimulation_Click"/>
+
+        <Button Name="btnSejmResultsMapLoad" Visibility="Hidden" Grid.Column="1" Content="SEJM" VerticalAlignment="Top" Height="60" Width="200" BorderThickness="10" BorderBrush="Red" Background="White" FontSize="30" FontWeight="Bold" Margin="720,11,80,0" Click="btnSejmResultsMapLoad_Click"/>
+        <Button Name="btnSenatResultsMapLoad" Visibility="Hidden" Grid.Column="1" Content="SENAT" VerticalAlignment="Top" Height="60" Width="200" BorderThickness="10" BorderBrush="Red" Background="White" HorizontalAlignment="Left" FontSize="30" FontWeight="Bold" Margin="80,11,0,0" Click="btnSenatResultsMapLoad_Click"/>
+
     </Grid>
 </Window>
