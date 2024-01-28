@@ -18,10 +18,10 @@ public class TimeManager
         set 
         {
             if (value < 0) return; 
-            else if (value >= 1589) _time = 1589;
+            else if (value >= 1588) _time = 1588;
             else _time = value;
 
-            if(_time == 1589) Done = true;
+            if(_time == 1588) Done = true;
         } 
     }
 
