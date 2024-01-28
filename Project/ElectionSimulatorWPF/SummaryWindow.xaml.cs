@@ -24,7 +24,7 @@ public partial class SummaryWindow : Window
 
 	private void btnBackToMainWindow_Click(object sender, RoutedEventArgs e)
 	{
-		var objectMainWindow = new MainWindow();
+		var objectMainWindow = new MapSimulationWindow();
 		this.Visibility = Visibility.Collapsed;
 		objectMainWindow.Show();
 	}
