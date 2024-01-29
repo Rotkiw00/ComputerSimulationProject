@@ -21,7 +21,13 @@ namespace ElectionSimulatorWPF
             InitializeComponent();
         }
 
-        private void btnHowToStartSim_Click(object sender, RoutedEventArgs e)
+		protected override void OnClosed(EventArgs e)
+		{
+			base.OnClosed(e);
+			Application.Current.Shutdown();
+		}
+
+		private void btnHowToStartSim_Click(object sender, RoutedEventArgs e)
         {
 
         }

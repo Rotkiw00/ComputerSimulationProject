@@ -36,15 +36,15 @@ namespace ElectionSimulatorWPF
 		private void btnBackToMainWindow_Click(object sender, RoutedEventArgs e)
 		{
 			var objectMainWindow = new MainWindow();
-			this.Visibility = Visibility.Collapsed;
 			objectMainWindow.Show();
+			this.Close();
 		}
 
 		private void btnSaveConfigForm_Click(object sender, RoutedEventArgs e)
 		{
 			var mapSimulationWindow = new MapSimulationWindow();
-			this.Visibility = Visibility.Collapsed;
 			mapSimulationWindow.Show();
+			this.Close();
 			/*
 			 przekazanie danych z formularza do symulacji (?)
 		     czy zapisanie do pliku .. (?) i później odczyt (?)

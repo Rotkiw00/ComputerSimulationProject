@@ -75,15 +75,15 @@ namespace ElectionSimulatorWPF
 		private void btnBackToMainWindow_Click(object sender, RoutedEventArgs e)
 		{
 			var mainWndw = new MainWindow();
-			this.Visibility = Visibility.Collapsed;
 			mainWndw.Show();
+			this.Close();
 		}
 
 		private void btnEnterSummaryWindow_Click(object sender, RoutedEventArgs e)
 		{
 			var summaryWndw = new SummaryWindow();
-			this.Visibility = Visibility.Collapsed;
 			summaryWndw.Show();
+			this.Close();
 		}
 
 		private void btnBeginSimulation_Click(object sender, RoutedEventArgs e)
