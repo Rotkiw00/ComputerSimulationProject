@@ -265,6 +265,26 @@
 
                 <Label Grid.Row="0" Content="Ustawienia demografii" VerticalAlignment="Center" Margin="10,0,10,0" FontSize="30" FontWeight="Bold"></Label>
 
+                <ScrollViewer Grid.Row="1">
+                    <StackPanel Name="demographyStackPanel" Grid.Row="1">
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+
+                            <Label Content="Frekwencja [%]" FontSize="30" Margin="10,0,0,0"></Label>
+                            <TextBox Name="attendanceTxt" Grid.Column="1" FontSize="20" HorizontalContentAlignment="Center" Margin="0,5,10,10"></TextBox>
+                            
+                            <!--Tutaj dorzucić kontrolki okręgów do określenia liczby mieszkańców
+                            Nie widzę prostszego miejsca na określenie l.mieszkańców-->
+                            
+                        </Grid>
+                        
+                    </StackPanel>
+                </ScrollViewer>
+                
             </Grid>
         </Border>
 

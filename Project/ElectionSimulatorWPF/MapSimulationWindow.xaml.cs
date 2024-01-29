@@ -48,10 +48,7 @@ namespace ElectionSimulatorWPF
 
 		private void ShowMap(int id, SimMap.RegionClicked onClick = null)
 		{
-			mapVisualisationGrid.Children.Clear(); // zmodyfikować canvas w XAMLu,
-												   // żeby czyścić tylko buttons i mapę, a nie wszystko
-
-			SimMap.Creator simMap = new()
+			SimMap.Creator simMapCreator = new()
 			{
 				Size = 900,
 				Color = System.Drawing.Color.Red,
@@ -59,16 +56,26 @@ namespace ElectionSimulatorWPF
 				RegionId = id
 			};
 
-			var map = simMap.Create();
-			var mapButtons = map.GetMap().Item2; // obsłuzyć wyjątek kiedy skończą się okręgi
-			Grid.SetColumn(map, 1);
-			Grid.SetRowSpan(map, 2);
-			mapVisualisationGrid.Children.Add(map);
-
-			foreach (var button in mapButtons)
+			var simMap = simMapCreator.Create();
+			if (simMap is not null)
 			{
-				Grid.SetColumn(button, 0);
-				stackPanelMapButtons.Children.Add(button);
+				mapLayoutGrid.Children.Clear();
+
+				Grid.SetColumn(simMap, 1);
+				Grid.SetRowSpan(simMap, 2);
+				mapLayoutGrid.Children.Add(simMap);
+
+				var simMapButtons = simMap.GetMap().Item2;
+				if (simMapButtons is not null)
+				{
+					stackPanelMapButtons.Children.Clear();
+
+					foreach (var mapButton in simMapButtons)
+					{
+						Grid.SetColumn(mapButton, 0);
+						stackPanelMapButtons.Children.Add(mapButton);
+					}
+				}
 			}
 		}
 
@@ -91,7 +98,7 @@ namespace ElectionSimulatorWPF
 			MessageBox.Show("Rozpoczynam symulacje");
 			// Wyniki dopiero po załadowaniu wynikowej mapy
 			/*
-			 * TUTAJ PROCES SYMULACJI
+			 * TUTAJ PROCES SYMULACJI (?)
 			 */
 			// po załadowaniu wynikowej mapy odblokować
 			// podsumowanie oraz mapy sejmu i senatu (?)
