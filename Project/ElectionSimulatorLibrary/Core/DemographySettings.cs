@@ -22,10 +22,13 @@ public class DemographySettings
 
         } 
     }
+    public double EventParticipationRate { get; set; } = 0.4;
 
     public DemographySettings()
     {
         ResetPlaceWeight();
+
+        // ** CONTROL VALUES **
 
         var PopulationList = new List<int>();
         
