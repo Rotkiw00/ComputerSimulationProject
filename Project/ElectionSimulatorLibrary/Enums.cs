@@ -35,6 +35,7 @@ public enum ResponseCode
 public enum ActionType
 {
     A_DoNothing, //nic
+    A_Sleep, //blokada
     PL_Meeting, //tworzy event i nic
     PL_Live_Tv, //tworzy event i nic
     PL_Internet,//tworzy event i nic
