@@ -9,8 +9,6 @@
         Title="Podsumowanie" Height="1000" Width="1500" ResizeMode="CanMinimize"
         WindowStartupLocation="CenterScreen">
     <Grid>
-        <!--tylko testowanie powrotu-->
-        <Button Name="btnBackToMainWindow" Content="Powrót" HorizontalAlignment="Left" FontSize="30" Margin="10,10,0,0" VerticalAlignment="Top" Height="55" Width="200" Click="btnBackToMainWindow_Click"/>
         <Button Name="btnLoadAndShowRezults" Content="Załaduj i wyświetl wyniki" HorizontalAlignment="Center" FontSize="30" Margin="0,10,0,0" VerticalAlignment="Top" Height="55" Width="340" Click="btnLoadAndShowRezults_Click"/>
 
         <blazor:BlazorWebView HostPage="wwwroot/Index.html" Services="{DynamicResource services}" Margin="0,70,0,0">

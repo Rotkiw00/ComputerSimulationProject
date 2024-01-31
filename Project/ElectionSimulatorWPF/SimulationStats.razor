@@ -11,9 +11,11 @@
 <br />
 
 @{
-	// Pierwsze ³adowanie jest inicjalizacyjne - obiekty s¹ puste
-	// TODO: ogarn¹æ w taki sposób, ¿eby móc pobraæ dane do wykresów
-	// ,ale NIE w fazie INICJALIZACJI
+	/* imo wykresy mog¹ zostaæ. Najwa¿niejsze co przyjmuj¹ to:
+	 * _.Data.Lables (lista stringów) -> nazwy partii
+	 * Data (w Datasets.Add()) -> lista decimali
+	 * Color równie¿ w Datasets
+	 */
 	if (SimulationResults is not null)
 	{
 		#region Bar Chart - wyniki poparcia dla PARTII

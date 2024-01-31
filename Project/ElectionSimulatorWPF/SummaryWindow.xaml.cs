@@ -22,15 +22,9 @@ public partial class SummaryWindow : Window
 		WndwState.SummaryWindow = this;
 	}
 
-	private void btnBackToMainWindow_Click(object sender, RoutedEventArgs e)
-	{
-		var objectMainWindow = new MapSimulationWindow();
-		objectMainWindow.Show();
-		this.Close();
-	}
-
 	private void btnLoadAndShowRezults_Click(object sender, RoutedEventArgs e)
 	{
+		// jeśli nie ładowanie z jsona to można to wszystko wywalić
 		var dialog = new Microsoft.Win32.OpenFileDialog()
 		{
 			DefaultExt = ".json",
