@@ -90,7 +90,8 @@ namespace ElectionSimulatorWPF
 		{
 			var summaryWndw = new SummaryWindow();
 			summaryWndw.Show();
-			this.Close();
+			// nie zamykam okna z mapą 
+			//this.Close(); 
 		}
 
 		private void btnBeginSimulation_Click(object sender, RoutedEventArgs e)
@@ -111,7 +112,7 @@ namespace ElectionSimulatorWPF
 		{
 			HandleResultMaps(ElectionType.Sejm);
 		}
-
+		// nie wiem czemu nie działa odpowiednie rzutowanie na daną mapę
 		private void btnSenatResultsMapLoad_Click(object sender, RoutedEventArgs e)
 		{
 			HandleResultMaps(ElectionType.Senat);
