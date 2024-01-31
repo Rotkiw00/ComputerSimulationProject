@@ -10,17 +10,122 @@ public class Action
 {
     private static List<Action> _possibleActions;
 
-    private static List<Action> PossibleActions 
+    private static List<Action> PossibleActions
     {
         get
         {
-            if(_possibleActions != null && _possibleActions.Count != 0)
+            if (_possibleActions != null && _possibleActions.Count != 0)
                 return _possibleActions;
 
             _possibleActions = new List<Action>();
 
             // ** CONTROL VALUES **
-            // TODO add actions
+            #region ActionDefiniton
+            _possibleActions.Add(new Action
+            {
+                Type = ActionType.PL_Meeting,
+                AgentType = AgentType.PoliticianLeader,
+                RangeStart = 0,
+                RangeEnd = 0.4,
+                IncreaseSupportValue = 500,
+                DecreaseSupportValue = 250,
+                IncreaseSupportChance = 0.7,
+                DecreaseSupportChance = 0.2,
+                EventEmptySlots = 1000,
+                ActionDuration = 2
+            });
+            _possibleActions.Add(new Action
+            {
+                Type = ActionType.PL_Live_Tv,
+                AgentType = AgentType.PoliticianLeader,
+                RangeStart = 0.4,
+                RangeEnd = 0.6,
+                IncreaseSupportValue = 250,
+                DecreaseSupportValue = 150,
+                IncreaseSupportChance = 0.4,
+                DecreaseSupportChance = 0.3,
+                EventEmptySlots = -1,
+                ActionDuration = 4
+            });
+            _possibleActions.Add(new Action
+            {
+                Type = ActionType.PL_Internet,
+                AgentType = AgentType.PoliticianLeader,
+                RangeStart = 0.6,
+                RangeEnd = 1,
+                IncreaseSupportValue = 100,
+                DecreaseSupportValue = 100,
+                IncreaseSupportChance = 0.4,
+                DecreaseSupportChance = 0.3,
+                EventEmptySlots = -1,
+                ActionDuration = 1
+            });
+            _possibleActions.Add(new Action
+            {
+                Type = ActionType.P_Meeting,
+                AgentType = AgentType.Politician,
+                RangeStart = 0,
+                RangeEnd = 0.4,
+                IncreaseSupportValue = 300,
+                DecreaseSupportValue = 100,
+                IncreaseSupportChance = 0.6,
+                DecreaseSupportChance = 0.2,
+                EventEmptySlots = 250,
+                ActionDuration = 2
+            });
+            _possibleActions.Add(new Action
+            {
+                Type = ActionType.P_Live_Tv,
+                AgentType = AgentType.Politician,
+                RangeStart = 0.4,
+                RangeEnd = 0.6,
+                IncreaseSupportValue = 200,
+                DecreaseSupportValue = 100,
+                IncreaseSupportChance = 0.4,
+                DecreaseSupportChance = 0.3,
+                EventEmptySlots = -1,
+                ActionDuration = 4
+            });
+            _possibleActions.Add(new Action
+            {
+                Type = ActionType.P_Internet,
+                AgentType = AgentType.Politician,
+                RangeStart = 0.6,
+                RangeEnd = 1,
+                IncreaseSupportValue = 100,
+                DecreaseSupportValue = 100,
+                IncreaseSupportChance = 0.4,
+                DecreaseSupportChance = 0.3,
+                EventEmptySlots = -1,
+                ActionDuration = 1
+            });
+            _possibleActions.Add(new Action
+            {
+                Type = ActionType.V_Live_Tv,
+                AgentType = AgentType.Voter,
+                RangeStart = 0,
+                RangeEnd = 0.5,
+                ViewsChangeUpValue = 5,
+                ViewsChangeDownValue = 3,
+                ViewsChangeUpChance = 0.4,
+                ViewsChangeDownChance = 0.2,
+                EventEmptySlots = 1,
+                ActionDuration = 2
+            });
+            _possibleActions.Add(new Action
+            {
+                Type = ActionType.V_Internet,
+                AgentType = AgentType.Voter,
+                RangeStart = 0.5,
+                RangeEnd = 1,
+                ViewsChangeUpValue = 5,
+                ViewsChangeDownValue = 3,
+                ViewsChangeUpChance = 0.4,
+                ViewsChangeDownChance = 0.2,
+                EventEmptySlots = 1,
+                ActionDuration = 1
+            });
+            #endregion
 
             return _possibleActions;
         }
@@ -67,10 +172,10 @@ public class Action
         #region ViewsModification
         // Conservatism_Progressivism
         fate = r.NextDouble();
-        if(ViewsChangeDownChance >= fate)
+        if (ViewsChangeDownChance >= fate)
         {
             bool positive = agent.Views.Conservatism_Progressivism >= 0;
-            if(positive) agent.Views.Conservatism_Progressivism -= ViewsChangeDownValue;
+            if (positive) agent.Views.Conservatism_Progressivism -= ViewsChangeDownValue;
             else agent.Views.Conservatism_Progressivism += ViewsChangeDownValue;
         }
 
@@ -146,7 +251,7 @@ public class Action
             DecreaseSupportChance = DecreaseSupportChance
         };
 
-        if(agent is not Politician)
+        if (agent is not Politician)
         {
             actionResult.Type = EventType.Single;
         }
