@@ -8,6 +8,29 @@ namespace ElectionSimulatorLibrary;
 
 public class Attributes
 {
+    public Attributes(int cp, int ee, int sc, int il)
+    {
+        Set(cp, ee, sc, il);
+    }
+
+    public Attributes(double cp, double ee, double sc, double il)
+    {
+        int cpi = (int)Math.Round(cp);
+        int eei = (int)Math.Round(ee);
+        int sci = (int)Math.Round(sc);
+        int ili = (int)Math.Round(il);
+
+        Set(cpi, eei, sci, ili);
+    }
+
+    private void Set(int cp, int ee, int sc, int il)
+    {
+        Conservatism_Progressivism = cp;
+        Euroscepticism_Euroenthusiasm = ee;
+        Socialism_Capitalism = sc;
+        IlliberalDemocracy_LiberalDemocracy = il;
+    }
+
     // L: -100 -> 100 :P
 
     private int _c_p = 0;
