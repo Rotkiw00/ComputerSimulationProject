@@ -8,7 +8,10 @@ namespace ElectionSimulatorLibrary;
 
 public abstract class Agent
 {
-    public int LockTime { get; set; } = -1;
+    public Attributes Views { get; set; } = new(0, 0, 0, 0);
+    public int LockTime { get; set; } = 0;
     public bool Available { get; set; } = true;
+
+    public abstract PoliticalParty GetTopParty();
 
 }

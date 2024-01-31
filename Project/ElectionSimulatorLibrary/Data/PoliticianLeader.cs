@@ -6,6 +6,4 @@ using System.Threading.Tasks;
 
 namespace ElectionSimulatorLibrary;
 
-public class PoliticianLeader : Politician
-{
-}
+public class PoliticianLeader : Politician { }

@@ -35,15 +35,26 @@ public enum ResponseCode
 public enum ActionType
 {
     A_DoNothing, //nic
-    A_Sleep, //blokada
     PL_Meeting, //tworzy event i nic
     PL_Live_Tv, //tworzy event i nic
     PL_Internet,//tworzy event i nic
     P_Meeting, //tworzy event i nic
     P_Live_Tv, //tworzy event i nic
     P_Internet, //tworzy event i nic
-    V_Work,
     V_Live_Tv,
-    V_Event,
     V_Internet
+}
+
+public enum EventType
+{
+    Single,
+    Multi
+}
+
+public enum AgentType
+{
+    Agent,
+    Voter,
+    Politician,
+    PoliticianLeader
 }

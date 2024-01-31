@@ -8,4 +8,10 @@ namespace ElectionSimulatorLibrary;
 
 public class Politician : Voter
 {
+    public PoliticalParty Party { get; set; }
+
+    public override PoliticalParty GetTopParty()
+    {
+        return Party;
+    }
 }
