@@ -8,4 +8,7 @@ namespace ElectionSimulatorLibrary;
 
 public class Values
 {
+    public DemographySettings Demography { get; set; }
+    public PoliticalSettings  Political { get; set; }
+
 }

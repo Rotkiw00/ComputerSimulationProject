@@ -29,4 +29,6 @@ public class TimeManager
     {
         CurrentTime += Interval;
     }
+
+    public void Reset() { _time = 0; }
 }

@@ -9,7 +9,7 @@ namespace ElectionSimulatorLibrary;
 public class Simulation
 {
 
-    public Simulation(FrequencySettings frequency, DemographySettings demography, PoliticalSettings political)
+    public Simulation(DemographySettings demography, PoliticalSettings political)
     {
 
     }
@@ -19,8 +19,4 @@ public class Simulation
         return new SimulationStatus { Response = ResponseCode.Undefined, Data = "" };
     }
 
-    public SimulationStatus Recalculate(int time, FrequencySettings newData)
-    {
-        return new SimulationStatus { Response = ResponseCode.Undefined, Data = "" };
-    }
 }
