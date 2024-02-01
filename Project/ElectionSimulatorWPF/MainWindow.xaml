@@ -29,13 +29,13 @@
         </Grid.ColumnDefinitions>
 
         <!--Content Left Side-->
-        <Label Grid.Row="0" Grid.ColumnSpan="4" Content="Symulator Wyborów Parlamentarnych" FontSize="40" FontWeight="Bold" Margin="10 0 0 0"/>
+        <Label Grid.Row="1" Grid.ColumnSpan="5" Content="Symulator Wyborów Parlamentarnych" FontSize="40" FontWeight="Bold" Margin="165,22,59,118" Grid.RowSpan="2" Grid.Column="1"/>
 
         <!--Content Right Side-->
         <Button Name="btnStartSimulation" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="3" Margin="0 5 10 5" BorderThickness="5" Content="Rozpocznij symulacje" FontSize="35" FontWeight="Bold" Click="btnStartSimulation_Click"/>
 
         <Label Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2" Content="Informacje" FontSize="35" FontWeight="Bold" VerticalAlignment="Bottom"/>
-        <Button Name="btnHowToStartSim" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="3" Margin="0 5 10 5" BorderThickness="5" Content="Jak zacząć symulację ?" FontSize="35" FontWeight="Bold" Click="btnHowToStartSim_Click"/>
+        <Button Name="btnHowToStartSim" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="3" Margin="0 5 10 5" BorderThickness="5" Content="Repozytorium" FontSize="35" FontWeight="Bold" Click="btnHowToStartSim_Click"/>
 
     </Grid>
 </Window>

@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Diagnostics;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -29,14 +30,23 @@ namespace ElectionSimulatorWPF
 
 		private void btnHowToStartSim_Click(object sender, RoutedEventArgs e)
         {
+            string url = "https://github.com/Rotkiw00/ComputerSimulationProject/blob/main/Sprawozdanie.pdf";
+            System.Diagnostics.Process.Start(new ProcessStartInfo
+            {
+                FileName = url,
+                UseShellExecute = true
+            });
 
         }
 
         private void btnStartSimulation_Click(object sender, RoutedEventArgs e)
         {
-            var configSimFormWindow = new ConfigSimulationFormWindow();
+            //var configSimFormWindow = new ConfigSimulationFormWindow();
             this.Visibility = Visibility.Collapsed;
-            configSimFormWindow.Show();
+            //configSimFormWindow.Show();
+
+            var mapSimulationWindow = new MapSimulationWindow();
+            mapSimulationWindow.Show();
         }
     }
 }

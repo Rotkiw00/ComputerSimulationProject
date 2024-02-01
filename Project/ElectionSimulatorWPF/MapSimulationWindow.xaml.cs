@@ -21,6 +21,12 @@ namespace ElectionSimulatorWPF
 	/// </summary>
 	public partial class MapSimulationWindow : Window
 	{
+
+		public int current_id = 0;
+		public int time = 0;
+
+		public Simulation Sim {  get; set; }
+
 		public MapSimulationWindow()
 		{
 			InitializeComponent();
@@ -43,20 +49,24 @@ namespace ElectionSimulatorWPF
 				HandleResultMaps(electionType, id);
 			};
 
-			ShowMap(id, onClick);
+			ShowMap(id, electionType, onClick);
 		}
 
-		private void ShowMap(int id, SimMap.RegionClicked onClick = null)
+		private void ShowMap(int id, ElectionType type, SimMap.RegionClicked onClick = null)
 		{
 			SimMap.Creator simMapCreator = new()
 			{
 				Size = 900,
 				Color = System.Drawing.Color.Red,
 				OnClick = onClick,
-				RegionId = id
+				RegionId = id,
+				MapMode = MapMode.Result
 			};
+			current_id = id;
+			var results = Sim.GetResult(id, type, time);
 
 			var simMap = simMapCreator.Create();
+			if (results != null) simMap.SetResult(results);
 			if (simMap is not null)
 			{
 				mapLayoutGrid.Children.Clear();
@@ -94,7 +104,7 @@ namespace ElectionSimulatorWPF
 			//this.Close(); 
 		}
 
-		private void btnBeginSimulation_Click(object sender, RoutedEventArgs e)
+		private async void btnBeginSimulation_Click(object sender, RoutedEventArgs e)
 		{
 			MessageBox.Show("Rozpoczynam symulacje");
 			// Wyniki dopiero po załadowaniu wynikowej mapy
@@ -103,9 +113,19 @@ namespace ElectionSimulatorWPF
 			 */
 			// po załadowaniu wynikowej mapy odblokować
 			// podsumowanie oraz mapy sejmu i senatu (?)
-			btnEnterSummaryWindow.IsEnabled = true;
-			btnSejmResultsMapLoad.Visibility = Visibility.Visible;
-			btnSenatResultsMapLoad.Visibility = Visibility.Visible;
+			
+			DemographySettings d = new DemographySettings();
+			PoliticalSettings p = new PoliticalSettings();
+			p.Default();
+			Sim = new Simulation(d, p);
+			bool result = await Sim.Start();
+
+			if (result)
+			{
+                btnEnterSummaryWindow.IsEnabled = true;
+                btnSejmResultsMapLoad.Visibility = Visibility.Visible;
+                btnSenatResultsMapLoad.Visibility = Visibility.Visible;
+            }
 		}
 
 		private void btnSejmResultsMapLoad_Click(object sender, RoutedEventArgs e)
