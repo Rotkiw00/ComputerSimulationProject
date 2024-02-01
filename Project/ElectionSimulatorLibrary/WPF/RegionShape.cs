@@ -127,8 +127,8 @@ public class RegionShape
         else
         {
             var color = _regionResult.Popularity
-                .OrderByDescending((x) => x.Item2)
-                .First().Item1.Color;
+                .OrderByDescending((x) => x.Value)
+                .First().Key.Color;
 
             Color = color;
 

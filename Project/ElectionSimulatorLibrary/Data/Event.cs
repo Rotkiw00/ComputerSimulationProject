@@ -23,6 +23,7 @@ public class Event
     public void Participate(Voter agent)
     {
         agent.LockTime += EventDuration;
+        agent.Available = false;
 
         Random r = new Random();
         double fate = 0;

@@ -165,6 +165,7 @@ public class Action
     public Event Do(Agent agent)
     {
         agent.LockTime += ActionDuration;
+        agent.Available = false;
 
         Random r = new Random();
         double fate = 0;

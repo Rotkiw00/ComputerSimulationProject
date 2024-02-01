@@ -190,7 +190,7 @@ public class DemographySettings
         for (int i = 0; i < 100; i++)
         {
             #region senatToSejm
-            int senatToSejm = i + 1 switch
+            int senatToSejm = (i + 1) switch
             {
                 1 or 2 or 3 => 1,
                 4 or 5 => 2,

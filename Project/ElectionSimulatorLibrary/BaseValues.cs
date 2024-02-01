@@ -88,7 +88,7 @@ public class BaseValues
     {
         if (time < 4)
         {
-            switch(time)
+            switch (time)
             {
                 case 0: return 20;
                 case 1: return 21;
@@ -137,9 +137,9 @@ public class BaseValues
                 Result singleResult = new Result();
                 singleResult.RegionId = i;
 
-                singleResult.Popularity.Add((p1, score1));
-                singleResult.Popularity.Add((p2, score2));
-                singleResult.Popularity.Add((p3, score3));
+                singleResult.Popularity.Add(p1, score1);
+                singleResult.Popularity.Add(p2, score2);
+                singleResult.Popularity.Add(p3, score3);
 
                 result.Add(singleResult);
             }
@@ -153,12 +153,47 @@ public class BaseValues
                 Result singleResult = new Result();
                 singleResult.RegionId = i;
 
-                singleResult.Popularity.Add((p1, score1));
-                singleResult.Popularity.Add((p2, score2));
-                singleResult.Popularity.Add((p3, score3));
+                singleResult.Popularity.Add(p1, score1);
+                singleResult.Popularity.Add(p2, score2);
+                singleResult.Popularity.Add(p3, score3);
 
                 result.Add(singleResult);
             }
+
+        return result;
+    }
+
+    public static int PopulationDifference(int attr, List<Voter> voters, int type)
+    {
+        int sum = 0;
+
+        foreach (var voter in voters)
+        {
+            switch (type)
+            {
+                case 1:
+                    sum += voter.Views.Conservatism_Progressivism;
+                    break;
+                case 2:
+                    sum += voter.Views.Euroscepticism_Euroenthusiasm;
+                    break;
+                case 3:
+                    sum += voter.Views.Socialism_Capitalism;
+                    break;
+                case 4:
+                    sum += voter.Views.IlliberalDemocracy_LiberalDemocracy;
+                    break;
+                default:
+                    break;
+            }
+  
+        }
+
+        int attrPop = sum / voters.Count;
+
+        int result = attr - attrPop;
+
+        if (result < 0) result = -result;
 
         return result;
     }

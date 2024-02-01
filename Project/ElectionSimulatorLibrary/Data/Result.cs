@@ -10,6 +10,6 @@ public class Result
 {
     public int RegionId {  get; set; }
     public bool Final {  get; set; } = false;
-    public List<(PoliticalParty, double)> Popularity { get; set; } = new();
+    public Dictionary<PoliticalParty, double> Popularity { get; set; } = new();
     public List<(PoliticalParty, int)> Mandates { get; set; } = new();
 }
