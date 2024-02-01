@@ -1,14 +1,23 @@
 ﻿using ElectionSimulatorLibrary;
 
-int sum = 0;
-for (int i = 1; i <= 41; i++)
-{
-    sum += ElectionSimulatorLibrary.BaseValues.GetSejmMandates(i);
-}
+DemographySettings d = new();
+PoliticalSettings p = new();
+p.Default();
+Simulation test = new(d, p);
 
-Console.WriteLine(sum);
+await test.Start();
 
-for (int i = 0; i <= 1588; i++)
+for (int i = 0; i < 2; i++)
 {
-    Console.WriteLine($"{i}: {BaseValues.TimeToDateTime(i)}");
+    List<Result> result = test.GetResult(0, ElectionType.Senat, i);
+    Console.WriteLine($"Data: {BaseValues.TimeToDateTime(i)}");
+    
+    foreach (var res in result)
+	{
+        Console.WriteLine($"RegionId: {res.RegionId}");
+        foreach(var party in res.Popularity)
+        {
+            Console.WriteLine($"{party.Key.Name} : {party.Value}");
+        }
+	}
 }
